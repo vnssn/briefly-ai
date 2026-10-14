@@ -1,26 +1,26 @@
 {
-  "timestamp": "2026-10-14T16:44:32.834Z",
+  "timestamp": "2026-10-14T18:04:27.787Z",
   "url": "https://briefly-ai-pink.vercel.app/api/brief",
   "model": "gemini-3.1-flash-lite",
   "results": [
     {
       "request": 1,
-      "status": 503,
-      "retryAfter": "60",
-      "elapsedMs": 2549,
+      "status": 429,
+      "retryAfter": "44",
+      "elapsedMs": 918,
       "body": {
-        "error": "Gemini is temporarily unavailable. Requests are paused briefly; your notes are still here.",
-        "retryAfter": 60
+        "error": "The app’s shared AI allowance is temporarily used up. Your notes are safe; try again after the wait.",
+        "retryAfter": 44
       }
     },
     {
       "request": 2,
       "status": 429,
-      "retryAfter": "60",
-      "elapsedMs": 1498,
+      "retryAfter": "44",
+      "elapsedMs": 757,
       "body": {
         "error": "The app’s shared AI allowance is temporarily used up. Your notes are safe; try again after the wait.",
-        "retryAfter": 60
+        "retryAfter": 44
       }
     }
   ]

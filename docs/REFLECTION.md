@@ -2,7 +2,7 @@
 
 ## Hardest part
 
-The hardest part was making the Gemini integration reliable. Calling the API was only one part of it. I also had to account for unexpected responses, API errors, and rate limits. The app uses validation and clear error messages, and it keeps the notes when a request fails. Shared rate limiting helps protect the API allowance across deployments. These protections were tested, but successful live Gemini generation has not been verified because the provider returned 503 errors.
+The hardest part was getting a reliable live AI response. Gemini kept returning 503 and permission errors, so I switched to Groq and added Arcjet protection on top of the existing shared Redis quota. Even after the provider change, I had to test the real endpoint, verify the structured output validated correctly, and confirm the production deployment used the right secrets. Making the app fail safely when quota or the provider is unavailable took more work than the initial API call.
 
 ## What I'd do differently
 
@@ -10,4 +10,4 @@ Next time, I'd test the API and deployment setup earlier, before spending as muc
 
 ## What I learned
 
-I learned that building an AI app is more than calling an API and showing the response. Validation, error handling, rate limiting, and testing are just as important. The project has 39 passing tests, but that doesn't replace checking whether the live AI feature actually works.
+I learned that building an AI app is more than calling an API and showing the response. Validation, error handling, rate limiting, and testing are just as important. The project has 47 passing tests, but that doesn't replace checking whether the live AI feature actually works. I also learned that provider limits and per-visitor protection are part of shipping a real app, not optional extras.

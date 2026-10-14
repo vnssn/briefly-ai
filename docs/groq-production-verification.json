@@ -1,0 +1,23 @@
+{
+  "description": "Production API smoke test after deploying Groq and Arcjet keys to Vercel.",
+  "capturedAt": "2026-10-14T18:00:00Z",
+  "url": "https://briefly-ai-pink.vercel.app/api/brief",
+  "provider": "GroqCloud",
+  "model": "openai/gpt-oss-120b",
+  "httpStatus": 200,
+  "result": {
+    "title": "Website launch sync — October 14",
+    "summary": "The team set the website launch for October 28, pending successful accessibility testing. Maya, Alex, and Sam have assigned tasks for copy, audit, and launch email. Support monitoring remains unassigned, and the analytics dashboard is out of scope.",
+    "decisions": [
+      "Launch the new website on October 28, contingent on passing accessibility testing.",
+      "Use the existing email platform instead of migrating before launch.",
+      "Analytics dashboard is out of scope for this release."
+    ],
+    "actions": [
+      { "task": "Finish the homepage copy", "owner": "Maya", "due": "October 18" },
+      { "task": "Run the accessibility audit and share findings", "owner": "Alex", "due": "October 21" },
+      { "task": "Prepare the launch email", "owner": "Sam", "due": "October 23" }
+    ],
+    "questions": ["Who will monitor support on launch day?"]
+  }
+}

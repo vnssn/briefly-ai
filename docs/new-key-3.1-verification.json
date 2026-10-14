@@ -1,0 +1,17 @@
+{
+  "timestamp": "2026-10-14T17:07:44.829Z",
+  "model": "gemini-3.1-flash-lite",
+  "rpm": 10,
+  "provider": {
+    "httpStatus": 403,
+    "code": "PERMISSION_DENIED",
+    "message": "Your project has been denied access. Please contact support."
+  },
+  "result": {
+    "status": 503,
+    "body": {
+      "error": "The Gemini model or API key is not available with the current server configuration. Your notes are safe; the sample still works.",
+      "retryAfter": 60
+    }
+  }
+}
