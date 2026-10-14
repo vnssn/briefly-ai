@@ -8,7 +8,12 @@ import {
   validateBrief,
   toMarkdown,
 } from "../src/brief.js";
-import handler, { createBrief as realCreateBrief } from "../api/brief.js";
+import handler, {
+  createBrief as realCreateBrief,
+  createArcjet,
+  protectRequest,
+  handleBriefRequest,
+} from "../api/brief.js";
 const createBrief = (notes, options) =>
   realCreateBrief(notes, {
     quotaStore: {
@@ -269,6 +274,74 @@ describe("quota countdown UI", () => {
     ).toBeDisabled();
     expect(fetch).toHaveBeenCalledTimes(1);
     expect(screen.getByText("SAMPLE BRIEF")).toBeInTheDocument();
+  });
+});
+
+describe("request protection", () => {
+  const resMock = () => ({
+    setHeader: vi.fn(),
+    status: vi.fn().mockReturnThis(),
+    json: vi.fn(),
+  });
+  it("skips protection when Arcjet is not configured", async () => {
+    expect(createArcjet({ key: "" })).toBeNull();
+    expect(await protectRequest(null, {})).toEqual({ allowed: true });
+  });
+  it("maps rate limit denials to 429 with a retry hint", async () => {
+    const client = {
+      protect: async () => ({
+        isDenied: () => true,
+        reason: { isRateLimit: () => true, reset: 45 },
+      }),
+    };
+    expect(await protectRequest(client, {})).toEqual({
+      allowed: false,
+      status: 429,
+      retryAfter: 45,
+      error: expect.stringContaining("Too many briefs"),
+    });
+    const res = resMock();
+    await handleBriefRequest(
+      { method: "POST", body: { notes: SAMPLE_NOTES } },
+      res,
+      { client },
+    );
+    expect(res.status).toHaveBeenCalledWith(429);
+    expect(res.setHeader).toHaveBeenCalledWith("Retry-After", "45");
+  });
+  it("blocks non-rate-limit denials without a retry hint", async () => {
+    const client = {
+      protect: async () => ({
+        isDenied: () => true,
+        reason: { isRateLimit: () => false },
+      }),
+    };
+    expect(await protectRequest(client, {})).toEqual({
+      allowed: false,
+      status: 403,
+      retryAfter: 0,
+      error: expect.stringContaining("blocked by request protection"),
+    });
+  });
+  it("fails open when Arcjet is unreachable and continues the normal flow", async () => {
+    const client = {
+      protect: async () => {
+        throw new Error("Arcjet unreachable");
+      },
+    };
+    expect(await protectRequest(client, {})).toEqual({ allowed: true });
+    const res = resMock();
+    await handleBriefRequest(
+      { method: "POST", body: { notes: "short" } },
+      res,
+      { client },
+    );
+    expect(res.status).toHaveBeenCalledWith(400);
+    expect(res.json).toHaveBeenCalledWith(
+      expect.objectContaining({
+        error: expect.stringContaining("40 and 15,000 characters"),
+      }),
+    );
   });
 });
 

@@ -1,5 +1,50 @@
 import { validateBrief } from "../src/brief.js";
 import { getQuotaStore, limitsFromEnv, inputBudget } from "../server/quota.js";
+import arcjet, { shield, detectBot, fixedWindow } from "@arcjet/node";
+
+// Per-visitor protection runs before the shared Redis quota. Bot detection is
+// DRY_RUN so automated auditing (Lighthouse, Playwright) is never blocked.
+export function createArcjet({ key = process.env.ARCJET_KEY } = {}) {
+  if (!key) return null;
+  return arcjet({
+    key,
+    rules: [
+      shield({ mode: "LIVE" }),
+      detectBot({
+        mode: "DRY_RUN",
+        allow: ["CATEGORY:SEARCH_ENGINE", "CATEGORY:MONITOR", "CATEGORY:PREVIEW"],
+      }),
+      fixedWindow({ mode: "LIVE", window: 60, max: 3 }),
+    ],
+  });
+}
+// Kept null under test so unit tests never touch the Arcjet cloud; decision
+// handling is covered with stub clients instead.
+const arcjetClient = process.env.NODE_ENV === "test" ? null : createArcjet();
+export async function protectRequest(client, req) {
+  if (!client) return { allowed: true };
+  try {
+    const decision = await client.protect(req);
+    if (decision.isDenied()) {
+      const rateLimit = decision.reason?.isRateLimit?.();
+      return {
+        allowed: false,
+        status: rateLimit ? 429 : 403,
+        retryAfter: rateLimit
+          ? Math.max(1, Math.ceil(decision.reason.reset ?? 60))
+          : 0,
+        error: rateLimit
+          ? "Too many briefs from your network right now. Please wait a moment; your notes are still here."
+          : "This request was blocked by request protection. If you believe this is a mistake, please try again later.",
+      };
+    }
+    return { allowed: true };
+  } catch {
+    // Arcjet is an additional per-visitor layer; the shared Redis quota still
+    // applies, so availability is preserved when Arcjet itself is unreachable.
+    return { allowed: true };
+  }
+}
 
 export const briefSchema = {
   type: "object",
@@ -167,11 +212,23 @@ export async function createBrief(
     };
   }
 }
-export default async function handler(req, res) {
+export async function handleBriefRequest(
+  req,
+  res,
+  { client = arcjetClient } = {},
+) {
   res.setHeader("Cache-Control", "no-store");
   if (req.method !== "POST") {
     res.setHeader("Allow", "POST");
     return res.status(405).json({ error: "Use POST to create a brief." });
+  }
+  const protection = await protectRequest(client, req);
+  if (!protection.allowed) {
+    if (protection.retryAfter)
+      res.setHeader("Retry-After", String(protection.retryAfter));
+    return res
+      .status(protection.status)
+      .json({ error: protection.error, retryAfter: protection.retryAfter });
   }
   let body = req.body;
   try {
@@ -184,3 +241,4 @@ export default async function handler(req, res) {
     res.setHeader("Retry-After", String(result.body.retryAfter));
   return res.status(result.status).json(result.body);
 }
+export default handleBriefRequest;
