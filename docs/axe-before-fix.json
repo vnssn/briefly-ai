@@ -1,0 +1,1039 @@
+{
+  "url": "http://127.0.0.1:5173/",
+  "timestamp": "2026-10-14T15:11:05.148Z",
+  "violations": [
+    {
+      "id": "color-contrast",
+      "impact": "serious",
+      "tags": [
+        "cat.color",
+        "wcag2aa",
+        "wcag143",
+        "TTv5",
+        "TT13.c",
+        "EN-301-549",
+        "EN-9.1.4.3",
+        "ACT",
+        "RGAAv4",
+        "RGAA-3.2.1"
+      ],
+      "description": "Ensure the contrast between foreground and background colors meets WCAG 2 AA minimum contrast ratio thresholds",
+      "help": "Elements must meet minimum color contrast ratio thresholds",
+      "helpUrl": "https://dequeuniversity.com/rules/axe/4.13/color-contrast?application=playwright",
+      "nodes": [
+        {
+          "any": [
+            {
+              "id": "color-contrast",
+              "data": {
+                "fgColor": "#727b72",
+                "bgColor": "#ffffff",
+                "contrastRatio": 4.38,
+                "fontSize": "7.5pt (10px)",
+                "fontWeight": "normal",
+                "messageKey": null,
+                "expectedContrastRatio": "4.5:1"
+              },
+              "relatedNodes": [
+                {
+                  "html": "<aside class=\"sidebar\">",
+                  "target": [
+                    "aside"
+                  ]
+                }
+              ],
+              "impact": "serious",
+              "message": "Element has insufficient color contrast of 4.38 (foreground color: #727b72, background color: #ffffff, font size: 7.5pt (10px), font weight: normal). Expected contrast ratio of 4.5:1"
+            }
+          ],
+          "all": [],
+          "none": [],
+          "impact": "serious",
+          "html": "<small>Your space for clear thinking</small>",
+          "target": [
+            "span:nth-child(2) > small"
+          ],
+          "failureSummary": "Fix any of the following:\n  Element has insufficient color contrast of 4.38 (foreground color: #727b72, background color: #ffffff, font size: 7.5pt (10px), font weight: normal). Expected contrast ratio of 4.5:1"
+        },
+        {
+          "any": [
+            {
+              "id": "color-contrast",
+              "data": {
+                "fgColor": "#768075",
+                "bgColor": "#ffffff",
+                "contrastRatio": 4.1,
+                "fontSize": "6.8pt (9px)",
+                "fontWeight": "normal",
+                "messageKey": null,
+                "expectedContrastRatio": "4.5:1"
+              },
+              "relatedNodes": [
+                {
+                  "html": "<aside class=\"sidebar\">",
+                  "target": [
+                    "aside"
+                  ]
+                }
+              ],
+              "impact": "serious",
+              "message": "Element has insufficient color contrast of 4.1 (foreground color: #768075, background color: #ffffff, font size: 6.8pt (9px), font weight: normal). Expected contrast ratio of 4.5:1"
+            }
+          ],
+          "all": [],
+          "none": [],
+          "impact": "serious",
+          "html": "<div class=\"nav-label\">WORKSPACE</div>",
+          "target": [
+            ".nav-label"
+          ],
+          "failureSummary": "Fix any of the following:\n  Element has insufficient color contrast of 4.1 (foreground color: #768075, background color: #ffffff, font size: 6.8pt (9px), font weight: normal). Expected contrast ratio of 4.5:1"
+        },
+        {
+          "any": [
+            {
+              "id": "color-contrast",
+              "data": {
+                "fgColor": "#6f7767",
+                "bgColor": "#f5f6ec",
+                "contrastRatio": 4.27,
+                "fontSize": "8.3pt (11px)",
+                "fontWeight": "normal",
+                "messageKey": null,
+                "expectedContrastRatio": "4.5:1"
+              },
+              "relatedNodes": [
+                {
+                  "html": "<div class=\"sidebar-note\"><span class=\"little-stars\">✳</span><h3>Less meeting.<br>More meaning.</h3><p>Good ideas deserve better than getting lost in your notes.</p><div class=\"note-line\"></div></div>",
+                  "target": [
+                    ".sidebar-note"
+                  ]
+                }
+              ],
+              "impact": "serious",
+              "message": "Element has insufficient color contrast of 4.27 (foreground color: #6f7767, background color: #f5f6ec, font size: 8.3pt (11px), font weight: normal). Expected contrast ratio of 4.5:1"
+            }
+          ],
+          "all": [],
+          "none": [],
+          "impact": "serious",
+          "html": "<p>Good ideas deserve better than getting lost in your notes.</p>",
+          "target": [
+            ".sidebar-note > p"
+          ],
+          "failureSummary": "Fix any of the following:\n  Element has insufficient color contrast of 4.27 (foreground color: #6f7767, background color: #f5f6ec, font size: 8.3pt (11px), font weight: normal). Expected contrast ratio of 4.5:1"
+        },
+        {
+          "any": [
+            {
+              "id": "color-contrast",
+              "data": {
+                "fgColor": "#748075",
+                "bgColor": "#fcfdfb",
+                "contrastRatio": 4.04,
+                "fontSize": "8.3pt (11px)",
+                "fontWeight": "normal",
+                "messageKey": null,
+                "expectedContrastRatio": "4.5:1"
+              },
+              "relatedNodes": [
+                {
+                  "html": "<header>",
+                  "target": [
+                    "header"
+                  ]
+                }
+              ],
+              "impact": "serious",
+              "message": "Element has insufficient color contrast of 4.04 (foreground color: #748075, background color: #fcfdfb, font size: 8.3pt (11px), font weight: normal). Expected contrast ratio of 4.5:1"
+            }
+          ],
+          "all": [],
+          "none": [],
+          "impact": "serious",
+          "html": "<div class=\"breadcrumb\">",
+          "target": [
+            ".breadcrumb"
+          ],
+          "failureSummary": "Fix any of the following:\n  Element has insufficient color contrast of 4.04 (foreground color: #748075, background color: #fcfdfb, font size: 8.3pt (11px), font weight: normal). Expected contrast ratio of 4.5:1"
+        },
+        {
+          "any": [
+            {
+              "id": "color-contrast",
+              "data": {
+                "fgColor": "#6b786d",
+                "bgColor": "#f7f8f5",
+                "contrastRatio": 4.34,
+                "fontSize": "9.0pt (12px)",
+                "fontWeight": "normal",
+                "messageKey": null,
+                "expectedContrastRatio": "4.5:1"
+              },
+              "relatedNodes": [
+                {
+                  "html": "<html lang=\"en\">",
+                  "target": [
+                    "html"
+                  ]
+                }
+              ],
+              "impact": "serious",
+              "message": "Element has insufficient color contrast of 4.34 (foreground color: #6b786d, background color: #f7f8f5, font size: 9.0pt (12px), font weight: normal). Expected contrast ratio of 4.5:1"
+            }
+          ],
+          "all": [],
+          "none": [],
+          "impact": "serious",
+          "html": "<p>Turn a tangle of notes into decisions, next steps, and a clear way forward.</p>",
+          "target": [
+            ".intro > div > p"
+          ],
+          "failureSummary": "Fix any of the following:\n  Element has insufficient color contrast of 4.34 (foreground color: #6b786d, background color: #f7f8f5, font size: 9.0pt (12px), font weight: normal). Expected contrast ratio of 4.5:1"
+        },
+        {
+          "any": [
+            {
+              "id": "color-contrast",
+              "data": {
+                "fgColor": "#828d7b",
+                "bgColor": "#ffffff",
+                "contrastRatio": 3.47,
+                "fontSize": "6.0pt (8px)",
+                "fontWeight": "normal",
+                "messageKey": null,
+                "expectedContrastRatio": "4.5:1"
+              },
+              "relatedNodes": [
+                {
+                  "html": "<section class=\"editor card\" aria-labelledby=\"notes-title\">",
+                  "target": [
+                    ".editor"
+                  ]
+                }
+              ],
+              "impact": "serious",
+              "message": "Element has insufficient color contrast of 3.47 (foreground color: #828d7b, background color: #ffffff, font size: 6.0pt (8px), font weight: normal). Expected contrast ratio of 4.5:1"
+            }
+          ],
+          "all": [],
+          "none": [],
+          "impact": "serious",
+          "html": "<span class=\"step-label\">STEP 01</span>",
+          "target": [
+            ".step-label"
+          ],
+          "failureSummary": "Fix any of the following:\n  Element has insufficient color contrast of 3.47 (foreground color: #828d7b, background color: #ffffff, font size: 6.0pt (8px), font weight: normal). Expected contrast ratio of 4.5:1"
+        },
+        {
+          "any": [
+            {
+              "id": "color-contrast",
+              "data": {
+                "fgColor": "#7a8377",
+                "bgColor": "#ffffff",
+                "contrastRatio": 3.93,
+                "fontSize": "8.3pt (11px)",
+                "fontWeight": "normal",
+                "messageKey": null,
+                "expectedContrastRatio": "4.5:1"
+              },
+              "relatedNodes": [
+                {
+                  "html": "<section class=\"editor card\" aria-labelledby=\"notes-title\">",
+                  "target": [
+                    ".editor"
+                  ]
+                }
+              ],
+              "impact": "serious",
+              "message": "Element has insufficient color contrast of 3.93 (foreground color: #7a8377, background color: #ffffff, font size: 8.3pt (11px), font weight: normal). Expected contrast ratio of 4.5:1"
+            }
+          ],
+          "all": [],
+          "none": [],
+          "impact": "serious",
+          "html": "<p>Paste your transcript, rough notes, or a brain dump. We’ll find the signal.</p>",
+          "target": [
+            "p:nth-child(2)"
+          ],
+          "failureSummary": "Fix any of the following:\n  Element has insufficient color contrast of 3.93 (foreground color: #7a8377, background color: #ffffff, font size: 8.3pt (11px), font weight: normal). Expected contrast ratio of 4.5:1"
+        },
+        {
+          "any": [
+            {
+              "id": "color-contrast",
+              "data": {
+                "fgColor": "#75816e",
+                "bgColor": "#ffffff",
+                "contrastRatio": 4.1,
+                "fontSize": "6.8pt (9px)",
+                "fontWeight": "normal",
+                "messageKey": null,
+                "expectedContrastRatio": "4.5:1"
+              },
+              "relatedNodes": [
+                {
+                  "html": "<section class=\"editor card\" aria-labelledby=\"notes-title\">",
+                  "target": [
+                    ".editor"
+                  ]
+                }
+              ],
+              "impact": "serious",
+              "message": "Element has insufficient color contrast of 4.1 (foreground color: #75816e, background color: #ffffff, font size: 6.8pt (9px), font weight: normal). Expected contrast ratio of 4.5:1"
+            }
+          ],
+          "all": [],
+          "none": [],
+          "impact": "serious",
+          "html": "<span id=\"notes-help\">40 characters minimum</span>",
+          "target": [
+            "#notes-help"
+          ],
+          "failureSummary": "Fix any of the following:\n  Element has insufficient color contrast of 4.1 (foreground color: #75816e, background color: #ffffff, font size: 6.8pt (9px), font weight: normal). Expected contrast ratio of 4.5:1"
+        },
+        {
+          "any": [
+            {
+              "id": "color-contrast",
+              "data": {
+                "fgColor": "#75816e",
+                "bgColor": "#ffffff",
+                "contrastRatio": 4.1,
+                "fontSize": "6.8pt (9px)",
+                "fontWeight": "normal",
+                "messageKey": null,
+                "expectedContrastRatio": "4.5:1"
+              },
+              "relatedNodes": [
+                {
+                  "html": "<section class=\"editor card\" aria-labelledby=\"notes-title\">",
+                  "target": [
+                    ".editor"
+                  ]
+                }
+              ],
+              "impact": "serious",
+              "message": "Element has insufficient color contrast of 4.1 (foreground color: #75816e, background color: #ffffff, font size: 6.8pt (9px), font weight: normal). Expected contrast ratio of 4.5:1"
+            }
+          ],
+          "all": [],
+          "none": [],
+          "impact": "serious",
+          "html": "<span>527 / 15,000</span>",
+          "target": [
+            ".editor-meta > span:nth-child(2)"
+          ],
+          "failureSummary": "Fix any of the following:\n  Element has insufficient color contrast of 4.1 (foreground color: #75816e, background color: #ffffff, font size: 6.8pt (9px), font weight: normal). Expected contrast ratio of 4.5:1"
+        },
+        {
+          "any": [
+            {
+              "id": "color-contrast",
+              "data": {
+                "fgColor": "#79806e",
+                "bgColor": "#f8f8f2",
+                "contrastRatio": 3.84,
+                "fontSize": "6.8pt (9px)",
+                "fontWeight": "normal",
+                "messageKey": null,
+                "expectedContrastRatio": "4.5:1"
+              },
+              "relatedNodes": [
+                {
+                  "html": "<div class=\"sample-callout\">",
+                  "target": [
+                    ".sample-callout"
+                  ]
+                }
+              ],
+              "impact": "serious",
+              "message": "Element has insufficient color contrast of 3.84 (foreground color: #79806e, background color: #f8f8f2, font size: 6.8pt (9px), font weight: normal). Expected contrast ratio of 4.5:1"
+            }
+          ],
+          "all": [],
+          "none": [],
+          "impact": "serious",
+          "html": "<span>See what a little clarity looks like.</span>",
+          "target": [
+            ".sample-callout > div > span"
+          ],
+          "failureSummary": "Fix any of the following:\n  Element has insufficient color contrast of 3.84 (foreground color: #79806e, background color: #f8f8f2, font size: 6.8pt (9px), font weight: normal). Expected contrast ratio of 4.5:1"
+        },
+        {
+          "any": [
+            {
+              "id": "color-contrast",
+              "data": {
+                "fgColor": "#778170",
+                "bgColor": "#ffffff",
+                "contrastRatio": 4.07,
+                "fontSize": "6.0pt (8px)",
+                "fontWeight": "normal",
+                "messageKey": null,
+                "expectedContrastRatio": "4.5:1"
+              },
+              "relatedNodes": [
+                {
+                  "html": "<section class=\"editor card\" aria-labelledby=\"notes-title\">",
+                  "target": [
+                    ".editor"
+                  ]
+                }
+              ],
+              "impact": "serious",
+              "message": "Element has insufficient color contrast of 4.07 (foreground color: #778170, background color: #ffffff, font size: 6.0pt (8px), font weight: normal). Expected contrast ratio of 4.5:1"
+            }
+          ],
+          "all": [],
+          "none": [],
+          "impact": "serious",
+          "html": "<p class=\"privacy\">",
+          "target": [
+            ".privacy"
+          ],
+          "failureSummary": "Fix any of the following:\n  Element has insufficient color contrast of 4.07 (foreground color: #778170, background color: #ffffff, font size: 6.0pt (8px), font weight: normal). Expected contrast ratio of 4.5:1"
+        },
+        {
+          "any": [
+            {
+              "id": "color-contrast",
+              "data": {
+                "fgColor": "#77856e",
+                "bgColor": "#ffffff",
+                "contrastRatio": 3.91,
+                "fontSize": "6.0pt (8px)",
+                "fontWeight": "normal",
+                "messageKey": null,
+                "expectedContrastRatio": "4.5:1"
+              },
+              "relatedNodes": [
+                {
+                  "html": "<section class=\"result card\" aria-labelledby=\"result-title\">",
+                  "target": [
+                    ".result"
+                  ]
+                }
+              ],
+              "impact": "serious",
+              "message": "Element has insufficient color contrast of 3.91 (foreground color: #77856e, background color: #ffffff, font size: 6.0pt (8px), font weight: normal). Expected contrast ratio of 4.5:1"
+            }
+          ],
+          "all": [],
+          "none": [],
+          "impact": "serious",
+          "html": "<div class=\"result-eyebrow\">MEETING BRIEF <span>•</span> EXAMPLE</div>",
+          "target": [
+            ".result-eyebrow"
+          ],
+          "failureSummary": "Fix any of the following:\n  Element has insufficient color contrast of 3.91 (foreground color: #77856e, background color: #ffffff, font size: 6.0pt (8px), font weight: normal). Expected contrast ratio of 4.5:1"
+        },
+        {
+          "any": [
+            {
+              "id": "color-contrast",
+              "data": {
+                "fgColor": "#7c8773",
+                "bgColor": "#ffffff",
+                "contrastRatio": 3.77,
+                "fontSize": "6.0pt (8px)",
+                "fontWeight": "normal",
+                "messageKey": null,
+                "expectedContrastRatio": "4.5:1"
+              },
+              "relatedNodes": [
+                {
+                  "html": "<section class=\"result card\" aria-labelledby=\"result-title\">",
+                  "target": [
+                    ".result"
+                  ]
+                }
+              ],
+              "impact": "serious",
+              "message": "Element has insufficient color contrast of 3.77 (foreground color: #7c8773, background color: #ffffff, font size: 6.0pt (8px), font weight: normal). Expected contrast ratio of 4.5:1"
+            }
+          ],
+          "all": [],
+          "none": [],
+          "impact": "serious",
+          "html": "<small>1 completed</small>",
+          "target": [
+            ".section-label:nth-child(6) > small"
+          ],
+          "failureSummary": "Fix any of the following:\n  Element has insufficient color contrast of 3.77 (foreground color: #7c8773, background color: #ffffff, font size: 6.0pt (8px), font weight: normal). Expected contrast ratio of 4.5:1"
+        },
+        {
+          "any": [
+            {
+              "id": "color-contrast",
+              "data": {
+                "fgColor": "#7c8773",
+                "bgColor": "#ffffff",
+                "contrastRatio": 3.77,
+                "fontSize": "7.5pt (10px)",
+                "fontWeight": "normal",
+                "messageKey": null,
+                "expectedContrastRatio": "4.5:1"
+              },
+              "relatedNodes": [
+                {
+                  "html": "<section class=\"result card\" aria-labelledby=\"result-title\">",
+                  "target": [
+                    ".result"
+                  ]
+                }
+              ],
+              "impact": "serious",
+              "message": "Element has insufficient color contrast of 3.77 (foreground color: #7c8773, background color: #ffffff, font size: 7.5pt (10px), font weight: normal). Expected contrast ratio of 4.5:1"
+            }
+          ],
+          "all": [],
+          "none": [],
+          "impact": "serious",
+          "html": "<strong>Finish the homepage copy</strong>",
+          "target": [
+            ".done > span > strong"
+          ],
+          "failureSummary": "Fix any of the following:\n  Element has insufficient color contrast of 3.77 (foreground color: #7c8773, background color: #ffffff, font size: 7.5pt (10px), font weight: normal). Expected contrast ratio of 4.5:1"
+        },
+        {
+          "any": [
+            {
+              "id": "color-contrast",
+              "data": {
+                "fgColor": "#657558",
+                "bgColor": "#edf1e8",
+                "contrastRatio": 4.32,
+                "fontSize": "6.0pt (8px)",
+                "fontWeight": "normal",
+                "messageKey": null,
+                "expectedContrastRatio": "4.5:1"
+              },
+              "relatedNodes": [
+                {
+                  "html": "<b>Maya</b>",
+                  "target": [
+                    ".done > span > .action-meta > b"
+                  ]
+                }
+              ],
+              "impact": "serious",
+              "message": "Element has insufficient color contrast of 4.32 (foreground color: #657558, background color: #edf1e8, font size: 6.0pt (8px), font weight: normal). Expected contrast ratio of 4.5:1"
+            }
+          ],
+          "all": [],
+          "none": [],
+          "impact": "serious",
+          "html": "<b>Maya</b>",
+          "target": [
+            ".done > span > .action-meta > b"
+          ],
+          "failureSummary": "Fix any of the following:\n  Element has insufficient color contrast of 4.32 (foreground color: #657558, background color: #edf1e8, font size: 6.0pt (8px), font weight: normal). Expected contrast ratio of 4.5:1"
+        },
+        {
+          "any": [
+            {
+              "id": "color-contrast",
+              "data": {
+                "fgColor": "#7c8674",
+                "bgColor": "#ffffff",
+                "contrastRatio": 3.8,
+                "fontSize": "6.0pt (8px)",
+                "fontWeight": "normal",
+                "messageKey": null,
+                "expectedContrastRatio": "4.5:1"
+              },
+              "relatedNodes": [
+                {
+                  "html": "<section class=\"result card\" aria-labelledby=\"result-title\">",
+                  "target": [
+                    ".result"
+                  ]
+                }
+              ],
+              "impact": "serious",
+              "message": "Element has insufficient color contrast of 3.8 (foreground color: #7c8674, background color: #ffffff, font size: 6.0pt (8px), font weight: normal). Expected contrast ratio of 4.5:1"
+            }
+          ],
+          "all": [],
+          "none": [],
+          "impact": "serious",
+          "html": "<span>Due October 18</span>",
+          "target": [
+            ".done > span > .action-meta > span"
+          ],
+          "failureSummary": "Fix any of the following:\n  Element has insufficient color contrast of 3.8 (foreground color: #7c8674, background color: #ffffff, font size: 6.0pt (8px), font weight: normal). Expected contrast ratio of 4.5:1"
+        },
+        {
+          "any": [
+            {
+              "id": "color-contrast",
+              "data": {
+                "fgColor": "#657558",
+                "bgColor": "#edf1e8",
+                "contrastRatio": 4.32,
+                "fontSize": "6.0pt (8px)",
+                "fontWeight": "normal",
+                "messageKey": null,
+                "expectedContrastRatio": "4.5:1"
+              },
+              "relatedNodes": [
+                {
+                  "html": "<b>Alex</b>",
+                  "target": [
+                    ".action:nth-child(2) > span > .action-meta > b"
+                  ]
+                }
+              ],
+              "impact": "serious",
+              "message": "Element has insufficient color contrast of 4.32 (foreground color: #657558, background color: #edf1e8, font size: 6.0pt (8px), font weight: normal). Expected contrast ratio of 4.5:1"
+            }
+          ],
+          "all": [],
+          "none": [],
+          "impact": "serious",
+          "html": "<b>Alex</b>",
+          "target": [
+            ".action:nth-child(2) > span > .action-meta > b"
+          ],
+          "failureSummary": "Fix any of the following:\n  Element has insufficient color contrast of 4.32 (foreground color: #657558, background color: #edf1e8, font size: 6.0pt (8px), font weight: normal). Expected contrast ratio of 4.5:1"
+        },
+        {
+          "any": [
+            {
+              "id": "color-contrast",
+              "data": {
+                "fgColor": "#7c8674",
+                "bgColor": "#ffffff",
+                "contrastRatio": 3.8,
+                "fontSize": "6.0pt (8px)",
+                "fontWeight": "normal",
+                "messageKey": null,
+                "expectedContrastRatio": "4.5:1"
+              },
+              "relatedNodes": [
+                {
+                  "html": "<section class=\"result card\" aria-labelledby=\"result-title\">",
+                  "target": [
+                    ".result"
+                  ]
+                }
+              ],
+              "impact": "serious",
+              "message": "Element has insufficient color contrast of 3.8 (foreground color: #7c8674, background color: #ffffff, font size: 6.0pt (8px), font weight: normal). Expected contrast ratio of 4.5:1"
+            }
+          ],
+          "all": [],
+          "none": [],
+          "impact": "serious",
+          "html": "<span>Due October 21</span>",
+          "target": [
+            ".action:nth-child(2) > span > .action-meta > span"
+          ],
+          "failureSummary": "Fix any of the following:\n  Element has insufficient color contrast of 3.8 (foreground color: #7c8674, background color: #ffffff, font size: 6.0pt (8px), font weight: normal). Expected contrast ratio of 4.5:1"
+        },
+        {
+          "any": [
+            {
+              "id": "color-contrast",
+              "data": {
+                "fgColor": "#657558",
+                "bgColor": "#edf1e8",
+                "contrastRatio": 4.32,
+                "fontSize": "6.0pt (8px)",
+                "fontWeight": "normal",
+                "messageKey": null,
+                "expectedContrastRatio": "4.5:1"
+              },
+              "relatedNodes": [
+                {
+                  "html": "<b>Sam</b>",
+                  "target": [
+                    ".action:nth-child(3) > span > .action-meta > b"
+                  ]
+                }
+              ],
+              "impact": "serious",
+              "message": "Element has insufficient color contrast of 4.32 (foreground color: #657558, background color: #edf1e8, font size: 6.0pt (8px), font weight: normal). Expected contrast ratio of 4.5:1"
+            }
+          ],
+          "all": [],
+          "none": [],
+          "impact": "serious",
+          "html": "<b>Sam</b>",
+          "target": [
+            ".action:nth-child(3) > span > .action-meta > b"
+          ],
+          "failureSummary": "Fix any of the following:\n  Element has insufficient color contrast of 4.32 (foreground color: #657558, background color: #edf1e8, font size: 6.0pt (8px), font weight: normal). Expected contrast ratio of 4.5:1"
+        },
+        {
+          "any": [
+            {
+              "id": "color-contrast",
+              "data": {
+                "fgColor": "#7c8674",
+                "bgColor": "#ffffff",
+                "contrastRatio": 3.8,
+                "fontSize": "6.0pt (8px)",
+                "fontWeight": "normal",
+                "messageKey": null,
+                "expectedContrastRatio": "4.5:1"
+              },
+              "relatedNodes": [
+                {
+                  "html": "<section class=\"result card\" aria-labelledby=\"result-title\">",
+                  "target": [
+                    ".result"
+                  ]
+                }
+              ],
+              "impact": "serious",
+              "message": "Element has insufficient color contrast of 3.8 (foreground color: #7c8674, background color: #ffffff, font size: 6.0pt (8px), font weight: normal). Expected contrast ratio of 4.5:1"
+            }
+          ],
+          "all": [],
+          "none": [],
+          "impact": "serious",
+          "html": "<span>Due October 23</span>",
+          "target": [
+            ".action:nth-child(3) > span > .action-meta > span"
+          ],
+          "failureSummary": "Fix any of the following:\n  Element has insufficient color contrast of 3.8 (foreground color: #7c8674, background color: #ffffff, font size: 6.0pt (8px), font weight: normal). Expected contrast ratio of 4.5:1"
+        },
+        {
+          "any": [
+            {
+              "id": "color-contrast",
+              "data": {
+                "fgColor": "#827747",
+                "bgColor": "#f9f7ee",
+                "contrastRatio": 4.18,
+                "fontSize": "8.3pt (11px)",
+                "fontWeight": "normal",
+                "messageKey": null,
+                "expectedContrastRatio": "4.5:1"
+              },
+              "relatedNodes": [
+                {
+                  "html": "<div class=\"questions\">",
+                  "target": [
+                    ".questions"
+                  ]
+                }
+              ],
+              "impact": "serious",
+              "message": "Element has insufficient color contrast of 4.18 (foreground color: #827747, background color: #f9f7ee, font size: 8.3pt (11px), font weight: normal). Expected contrast ratio of 4.5:1"
+            }
+          ],
+          "all": [],
+          "none": [],
+          "impact": "serious",
+          "html": "<h4>Still to figure out</h4>",
+          "target": [
+            ".questions > .section-label > h4"
+          ],
+          "failureSummary": "Fix any of the following:\n  Element has insufficient color contrast of 4.18 (foreground color: #827747, background color: #f9f7ee, font size: 8.3pt (11px), font weight: normal). Expected contrast ratio of 4.5:1"
+        },
+        {
+          "any": [
+            {
+              "id": "color-contrast",
+              "data": {
+                "fgColor": "#827954",
+                "bgColor": "#f9f7ee",
+                "contrastRatio": 4.06,
+                "fontSize": "7.5pt (10px)",
+                "fontWeight": "normal",
+                "messageKey": null,
+                "expectedContrastRatio": "4.5:1"
+              },
+              "relatedNodes": [
+                {
+                  "html": "<div class=\"questions\">",
+                  "target": [
+                    ".questions"
+                  ]
+                }
+              ],
+              "impact": "serious",
+              "message": "Element has insufficient color contrast of 4.06 (foreground color: #827954, background color: #f9f7ee, font size: 7.5pt (10px), font weight: normal). Expected contrast ratio of 4.5:1"
+            }
+          ],
+          "all": [],
+          "none": [],
+          "impact": "serious",
+          "html": "<li>Who will monitor support on launch day?</li>",
+          "target": [
+            ".questions > ul > li"
+          ],
+          "failureSummary": "Fix any of the following:\n  Element has insufficient color contrast of 4.06 (foreground color: #827954, background color: #f9f7ee, font size: 7.5pt (10px), font weight: normal). Expected contrast ratio of 4.5:1"
+        },
+        {
+          "any": [
+            {
+              "id": "color-contrast",
+              "data": {
+                "fgColor": "#86907c",
+                "bgColor": "#ffffff",
+                "contrastRatio": 3.33,
+                "fontSize": "6.8pt (9px)",
+                "fontWeight": "normal",
+                "messageKey": null,
+                "expectedContrastRatio": "4.5:1"
+              },
+              "relatedNodes": [
+                {
+                  "html": "<section class=\"result card\" aria-labelledby=\"result-title\">",
+                  "target": [
+                    ".result"
+                  ]
+                }
+              ],
+              "impact": "serious",
+              "message": "Element has insufficient color contrast of 3.33 (foreground color: #86907c, background color: #ffffff, font size: 6.8pt (9px), font weight: normal). Expected contrast ratio of 4.5:1"
+            }
+          ],
+          "all": [],
+          "none": [],
+          "impact": "serious",
+          "html": "<span>Clarity looks good on you.</span>",
+          "target": [
+            ".result-footer > span"
+          ],
+          "failureSummary": "Fix any of the following:\n  Element has insufficient color contrast of 3.33 (foreground color: #86907c, background color: #ffffff, font size: 6.8pt (9px), font weight: normal). Expected contrast ratio of 4.5:1"
+        },
+        {
+          "any": [
+            {
+              "id": "color-contrast",
+              "data": {
+                "fgColor": "#77816f",
+                "bgColor": "#f7f8f5",
+                "contrastRatio": 3.82,
+                "fontSize": "6.8pt (9px)",
+                "fontWeight": "normal",
+                "messageKey": null,
+                "expectedContrastRatio": "4.5:1"
+              },
+              "relatedNodes": [
+                {
+                  "html": "<html lang=\"en\">",
+                  "target": [
+                    "html"
+                  ]
+                }
+              ],
+              "impact": "serious",
+              "message": "Element has insufficient color contrast of 3.82 (foreground color: #77816f, background color: #f7f8f5, font size: 6.8pt (9px), font weight: normal). Expected contrast ratio of 4.5:1"
+            }
+          ],
+          "all": [],
+          "none": [],
+          "impact": "serious",
+          "html": "<span>Your workspace stays in this tab. We don’t store your meeting notes.</span>",
+          "target": [
+            ".bottom-note > span:nth-child(2)"
+          ],
+          "failureSummary": "Fix any of the following:\n  Element has insufficient color contrast of 3.82 (foreground color: #77816f, background color: #f7f8f5, font size: 6.8pt (9px), font weight: normal). Expected contrast ratio of 4.5:1"
+        },
+        {
+          "any": [
+            {
+              "id": "color-contrast",
+              "data": {
+                "fgColor": "#77816f",
+                "bgColor": "#f7f8f5",
+                "contrastRatio": 3.82,
+                "fontSize": "6.0pt (8px)",
+                "fontWeight": "normal",
+                "messageKey": null,
+                "expectedContrastRatio": "4.5:1"
+              },
+              "relatedNodes": [
+                {
+                  "html": "<html lang=\"en\">",
+                  "target": [
+                    "html"
+                  ]
+                }
+              ],
+              "impact": "serious",
+              "message": "Element has insufficient color contrast of 3.82 (foreground color: #77816f, background color: #f7f8f5, font size: 6.0pt (8px), font weight: normal). Expected contrast ratio of 4.5:1"
+            }
+          ],
+          "all": [],
+          "none": [],
+          "impact": "serious",
+          "html": "<span class=\"review-note\">AI can miss things. A quick review goes a long way.</span>",
+          "target": [
+            ".review-note"
+          ],
+          "failureSummary": "Fix any of the following:\n  Element has insufficient color contrast of 3.82 (foreground color: #77816f, background color: #f7f8f5, font size: 6.0pt (8px), font weight: normal). Expected contrast ratio of 4.5:1"
+        },
+        {
+          "any": [
+            {
+              "id": "color-contrast",
+              "data": {
+                "fgColor": "#7e8876",
+                "bgColor": "#f7f8f5",
+                "contrastRatio": 3.47,
+                "fontSize": "6.8pt (9px)",
+                "fontWeight": "normal",
+                "messageKey": null,
+                "expectedContrastRatio": "4.5:1"
+              },
+              "relatedNodes": [
+                {
+                  "html": "<html lang=\"en\">",
+                  "target": [
+                    "html"
+                  ]
+                }
+              ],
+              "impact": "serious",
+              "message": "Element has insufficient color contrast of 3.47 (foreground color: #7e8876, background color: #f7f8f5, font size: 6.8pt (9px), font weight: normal). Expected contrast ratio of 4.5:1"
+            }
+          ],
+          "all": [],
+          "none": [],
+          "impact": "serious",
+          "html": "<span>Made for the moment after the meeting.</span>",
+          "target": [
+            "footer > span:nth-child(1)"
+          ],
+          "failureSummary": "Fix any of the following:\n  Element has insufficient color contrast of 3.47 (foreground color: #7e8876, background color: #f7f8f5, font size: 6.8pt (9px), font weight: normal). Expected contrast ratio of 4.5:1"
+        },
+        {
+          "any": [
+            {
+              "id": "color-contrast",
+              "data": {
+                "fgColor": "#7e8876",
+                "bgColor": "#f7f8f5",
+                "contrastRatio": 3.47,
+                "fontSize": "6.0pt (8px)",
+                "fontWeight": "normal",
+                "messageKey": null,
+                "expectedContrastRatio": "4.5:1"
+              },
+              "relatedNodes": [
+                {
+                  "html": "<html lang=\"en\">",
+                  "target": [
+                    "html"
+                  ]
+                }
+              ],
+              "impact": "serious",
+              "message": "Element has insufficient color contrast of 3.47 (foreground color: #7e8876, background color: #f7f8f5, font size: 6.0pt (8px), font weight: normal). Expected contrast ratio of 4.5:1"
+            }
+          ],
+          "all": [],
+          "none": [],
+          "impact": "serious",
+          "html": "<span>BRIEFLY <span class=\"footer-star\">✳</span> MAKE SPACE FOR WHAT’S NEXT</span>",
+          "target": [
+            "footer > span:nth-child(2)"
+          ],
+          "failureSummary": "Fix any of the following:\n  Element has insufficient color contrast of 3.47 (foreground color: #7e8876, background color: #f7f8f5, font size: 6.0pt (8px), font weight: normal). Expected contrast ratio of 4.5:1"
+        }
+      ]
+    }
+  ],
+  "passes": [
+    {
+      "id": "aria-allowed-attr",
+      "description": "Ensure an element's role supports its ARIA attributes"
+    },
+    {
+      "id": "aria-conditional-attr",
+      "description": "Ensure ARIA attributes are used as described in the specification of the element's role"
+    },
+    {
+      "id": "aria-deprecated-role",
+      "description": "Ensure elements do not use deprecated roles"
+    },
+    {
+      "id": "aria-hidden-body",
+      "description": "Ensure aria-hidden=\"true\" is not present on the document body."
+    },
+    {
+      "id": "aria-prohibited-attr",
+      "description": "Ensure ARIA attributes are not prohibited for an element's role"
+    },
+    {
+      "id": "aria-required-attr",
+      "description": "Ensure elements with ARIA roles have all required ARIA attributes"
+    },
+    {
+      "id": "aria-roles",
+      "description": "Ensure all elements with a role attribute use a valid value"
+    },
+    {
+      "id": "aria-valid-attr-value",
+      "description": "Ensure all ARIA attributes have valid values"
+    },
+    {
+      "id": "aria-valid-attr",
+      "description": "Ensure attributes that begin with aria- are valid ARIA attributes"
+    },
+    {
+      "id": "button-name",
+      "description": "Ensure buttons have discernible text"
+    },
+    {
+      "id": "bypass",
+      "description": "Ensure each page has at least one mechanism for a user to bypass navigation and jump straight to the content"
+    },
+    {
+      "id": "color-contrast",
+      "description": "Ensure the contrast between foreground and background colors meets WCAG 2 AA minimum contrast ratio thresholds"
+    },
+    {
+      "id": "document-title",
+      "description": "Ensure each HTML document contains a non-empty <title> element"
+    },
+    {
+      "id": "duplicate-id-aria",
+      "description": "Ensure every id attribute value used in ARIA and in labels is unique"
+    },
+    {
+      "id": "form-field-multiple-labels",
+      "description": "Ensure form field does not have multiple label elements"
+    },
+    {
+      "id": "html-has-lang",
+      "description": "Ensure every HTML document has a lang attribute"
+    },
+    {
+      "id": "html-lang-valid",
+      "description": "Ensure the lang attribute of the <html> element has a valid value"
+    },
+    {
+      "id": "label",
+      "description": "Ensure every form element has a label"
+    },
+    {
+      "id": "link-name",
+      "description": "Ensure links have discernible text"
+    },
+    {
+      "id": "list",
+      "description": "Ensure that lists are structured correctly"
+    },
+    {
+      "id": "listitem",
+      "description": "Ensure <li> elements are used semantically"
+    },
+    {
+      "id": "meta-viewport",
+      "description": "Ensure <meta name=\"viewport\"> does not disable text scaling and zooming"
+    },
+    {
+      "id": "nested-interactive",
+      "description": "Ensure interactive controls are not nested as they are not always announced by screen readers or can cause focus problems for assistive technologies"
+    }
+  ]
+}

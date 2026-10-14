@@ -1,0 +1,99 @@
+{
+  "url": "http://127.0.0.1:5173/",
+  "timestamp": "2026-10-14T15:12:14.791Z",
+  "violations": [],
+  "passes": [
+    {
+      "id": "aria-allowed-attr",
+      "description": "Ensure an element's role supports its ARIA attributes"
+    },
+    {
+      "id": "aria-conditional-attr",
+      "description": "Ensure ARIA attributes are used as described in the specification of the element's role"
+    },
+    {
+      "id": "aria-deprecated-role",
+      "description": "Ensure elements do not use deprecated roles"
+    },
+    {
+      "id": "aria-hidden-body",
+      "description": "Ensure aria-hidden=\"true\" is not present on the document body."
+    },
+    {
+      "id": "aria-prohibited-attr",
+      "description": "Ensure ARIA attributes are not prohibited for an element's role"
+    },
+    {
+      "id": "aria-required-attr",
+      "description": "Ensure elements with ARIA roles have all required ARIA attributes"
+    },
+    {
+      "id": "aria-roles",
+      "description": "Ensure all elements with a role attribute use a valid value"
+    },
+    {
+      "id": "aria-valid-attr-value",
+      "description": "Ensure all ARIA attributes have valid values"
+    },
+    {
+      "id": "aria-valid-attr",
+      "description": "Ensure attributes that begin with aria- are valid ARIA attributes"
+    },
+    {
+      "id": "button-name",
+      "description": "Ensure buttons have discernible text"
+    },
+    {
+      "id": "bypass",
+      "description": "Ensure each page has at least one mechanism for a user to bypass navigation and jump straight to the content"
+    },
+    {
+      "id": "color-contrast",
+      "description": "Ensure the contrast between foreground and background colors meets WCAG 2 AA minimum contrast ratio thresholds"
+    },
+    {
+      "id": "document-title",
+      "description": "Ensure each HTML document contains a non-empty <title> element"
+    },
+    {
+      "id": "duplicate-id-aria",
+      "description": "Ensure every id attribute value used in ARIA and in labels is unique"
+    },
+    {
+      "id": "form-field-multiple-labels",
+      "description": "Ensure form field does not have multiple label elements"
+    },
+    {
+      "id": "html-has-lang",
+      "description": "Ensure every HTML document has a lang attribute"
+    },
+    {
+      "id": "html-lang-valid",
+      "description": "Ensure the lang attribute of the <html> element has a valid value"
+    },
+    {
+      "id": "label",
+      "description": "Ensure every form element has a label"
+    },
+    {
+      "id": "link-name",
+      "description": "Ensure links have discernible text"
+    },
+    {
+      "id": "list",
+      "description": "Ensure that lists are structured correctly"
+    },
+    {
+      "id": "listitem",
+      "description": "Ensure <li> elements are used semantically"
+    },
+    {
+      "id": "meta-viewport",
+      "description": "Ensure <meta name=\"viewport\"> does not disable text scaling and zooming"
+    },
+    {
+      "id": "nested-interactive",
+      "description": "Ensure interactive controls are not nested as they are not always announced by screen readers or can cause focus problems for assistive technologies"
+    }
+  ]
+}
