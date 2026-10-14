@@ -4,9 +4,9 @@ Run date: 14 October 2026 (Asia/Kolkata). Local checks; production checks are st
 
 ## Automated tests
 
-- Vitest: **22 tests passed**.
-- Statement coverage: **84.34%**; branch coverage: **89.79%**; function coverage: **81.25%**.
-- All three React components (`App`, `NotesEditor`, `BriefResult`) have behavior tests. Overall line coverage is **86.11%**.
+- Vitest: **38 tests passed**.
+- Statement coverage: **89.65%**; branch coverage: **91.57%**; function coverage: **86.27%**.
+- All three React components (`App`, `NotesEditor`, `BriefResult`) have behavior tests. Overall line coverage is **90.42%**.
 - Evidence: `coverage-summary.json`; full HTML report is generated in `coverage/` by `npm test`.
 - Browser tests: **2 passed**, covering the sample, checkbox progress, download, keyboard entry, mocked live generation, and preserving notes/results after a service failure.
 - Browser API responses are mocked. These tests do not verify a real provider response.
@@ -45,4 +45,6 @@ Production bundle served locally in Chrome with Lighthouse mobile defaults:
 
 Live URL, GitHub push, Vercel deployment, production headers, real Gemini generation, and final deployed Lighthouse scores remain pending. See `DEPLOYMENT.md`.
 
+## Free-tier quota verification
 
+The suite now includes rolling shared budgets, concurrent local reservations, input-budget rejection, provider cooldowns, RetryInfo, Redis failure handling, production fail-closed behavior, and the browser retry countdown. Both browser tests and axe scans passed again after these changes. Shared Redis connectivity and execution of its Lua script remain pending configuration; see RATE_LIMITS.md. No additional live Gemini requests were used to test rate limiting. Lighthouse reports predate the quota UI change.

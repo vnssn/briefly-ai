@@ -18,7 +18,9 @@
 - [ ] Real Gemini generation tested on deployed URL.
 - [ ] Sample, task toggling, export, and keyboard interactions tested in production.
 - [ ] Failure states checked without disclosing provider secrets.
-- [ ] Public endpoint abuse controls reviewed/configured before broad sharing.
+- [ ] Shared Redis configured; atomic quota reservation tested across deployments.
+- [ ] AI Studio RPM/TPM/RPD confirmed; app budgets leave headroom.
+- [ ] Public endpoint Firewall controls reviewed/configured before broad sharing.
 
 Unchecked items are not signed off.
 
@@ -32,4 +34,3 @@ In Vercel Deployments, select the previous verified production deployment and pr
 
 Release owner: Vansh Singh
 Sign-off date: pending production checks
-

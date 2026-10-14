@@ -8,7 +8,15 @@ import {
   validateBrief,
   toMarkdown,
 } from "../src/brief.js";
-import handler, { createBrief } from "../api/brief.js";
+import handler, { createBrief as realCreateBrief } from "../api/brief.js";
+const createBrief = (notes, options) =>
+  realCreateBrief(notes, {
+    quotaStore: {
+      reserve: async () => ({ allowed: true }),
+      cooldown: async () => {},
+    },
+    ...options,
+  });
 describe("brief data contract", () => {
   it("accepts a complete brief", () =>
     expect(validateBrief(SAMPLE_BRIEF)).toEqual(SAMPLE_BRIEF));
@@ -117,12 +125,10 @@ describe("workspace flow", () => {
   it("generates a live brief", async () => {
     vi.stubGlobal(
       "fetch",
-      vi
-        .fn()
-        .mockResolvedValue({
-          ok: true,
-          json: async () => ({ brief: SAMPLE_BRIEF }),
-        }),
+      vi.fn().mockResolvedValue({
+        ok: true,
+        json: async () => ({ brief: SAMPLE_BRIEF }),
+      }),
     );
     render(<App />);
     fireEvent.change(screen.getByLabelText("Start with the messy part."), {
@@ -138,12 +144,10 @@ describe("workspace flow", () => {
   it("keeps input and prior brief on service failure", async () => {
     vi.stubGlobal(
       "fetch",
-      vi
-        .fn()
-        .mockResolvedValue({
-          ok: false,
-          json: async () => ({ error: "Quota reached" }),
-        }),
+      vi.fn().mockResolvedValue({
+        ok: false,
+        json: async () => ({ error: "Quota reached" }),
+      }),
     );
     render(<App />);
     fireEvent.click(screen.getByRole("button", { name: /Try a sample/ }));
@@ -177,16 +181,14 @@ describe("server boundary", () => {
     expect((await createBrief(SAMPLE_NOTES, { key: "" })).status).toBe(503);
   });
   it("extracts validated structured output", async () => {
-    const fetcher = vi
-      .fn()
-      .mockResolvedValue({
-        ok: true,
-        json: async () => ({
-          candidates: [
-            { content: { parts: [{ text: JSON.stringify(SAMPLE_BRIEF) }] } },
-          ],
-        }),
-      });
+    const fetcher = vi.fn().mockResolvedValue({
+      ok: true,
+      json: async () => ({
+        candidates: [
+          { content: { parts: [{ text: JSON.stringify(SAMPLE_BRIEF) }] } },
+        ],
+      }),
+    });
     expect(
       (await createBrief(SAMPLE_NOTES, { key: "test", fetcher })).body.brief,
     ).toEqual(SAMPLE_BRIEF);
@@ -198,7 +200,7 @@ describe("server boundary", () => {
       key: "test",
       fetcher: async () => ({ ok: false, status }),
     });
-    expect(result.status).toBe(status === 429 ? 429 : 502);
+    expect(result.status).toBe(status === 429 ? 429 : 503);
     expect(result.body.error).not.toContain("test");
   });
   it("handles invalid JSON, blocked output, and timeouts", async () => {
@@ -237,5 +239,32 @@ describe("server boundary", () => {
     expect(res.status).toHaveBeenCalledWith(400);
     await handler({ method: "POST", body: { notes: "short" } }, res);
     expect(res.status).toHaveBeenCalledWith(400);
+  });
+});
+
+describe("quota countdown UI", () => {
+  it("keeps the sample available but prevents more AI calls during cooldown", async () => {
+    vi.stubGlobal(
+      "fetch",
+      vi
+        .fn()
+        .mockResolvedValue({
+          ok: false,
+          json: async () => ({ error: "Please wait", retryAfter: 120 }),
+        }),
+    );
+    render(<App />);
+    fireEvent.click(screen.getByRole("button", { name: /Try a sample/ }));
+    fireEvent.click(screen.getByRole("button", { name: /Create my brief/ }));
+    expect(
+      await screen.findByRole("button", { name: "Try again in 2 min" }),
+    ).toBeDisabled();
+    fireEvent.click(screen.getByRole("button", { name: /New brief/ }));
+    fireEvent.click(screen.getByRole("button", { name: /Try a sample/ }));
+    expect(
+      screen.getByRole("button", { name: "Try again in 2 min" }),
+    ).toBeDisabled();
+    expect(fetch).toHaveBeenCalledTimes(1);
+    expect(screen.getByText("SAMPLE BRIEF")).toBeInTheDocument();
   });
 });

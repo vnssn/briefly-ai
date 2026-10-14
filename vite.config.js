@@ -40,7 +40,7 @@ export default defineConfig(({ mode }) => {
       coverage: {
         provider: "v8",
         reporter: ["text", "json-summary", "html"],
-        include: ["src/**/*.{js,jsx}", "api/**/*.js"],
+        include: ["src/**/*.{js,jsx}", "api/**/*.js", "server/**/*.js"],
         exclude: ["src/main.jsx"],
         thresholds: { lines: 50, functions: 50, statements: 50, branches: 50 },
       },

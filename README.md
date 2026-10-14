@@ -36,7 +36,7 @@ npm run build
 - `vercel.json`: security headers and server-function timeout.
 - `tests/`: component, contract, API, and user-flow tests.
 
-The browser sends notes to the same-origin server endpoint. The server holds the API key and sends the notes to Gemini. Generated output is validated at both boundaries and rendered as text by React. No database, note history, or browser storage is used. Notes and generated briefs disappear on refresh; export anything you want to retain. Google processes notes under its applicable Gemini service terms. Do not use confidential meeting notes without appropriate consent.
+The browser sends notes to the same-origin server endpoint. The server holds the API key and sends the notes to Gemini. Generated output is validated at both boundaries and rendered as text by React. No meeting-note database, history, or browser storage is used. Production quota protection stores only attempt timestamps, input-size estimates, and cooldowns in Redis. Notes and generated briefs disappear on refresh; export anything you want to retain. Google processes notes under its applicable Gemini service terms. Do not use confidential meeting notes without appropriate consent.
 
 ## AI integration
 
@@ -59,8 +59,9 @@ Reference: [Google Gemini structured output documentation](https://ai.google.dev
 1. Push this project to a GitHub repository. Never commit `.env.local`.
 2. Import the repository in Vercel. Select Vite; build command `npm run build`, output `dist`.
 3. Add `GEMINI_API_KEY` and optionally `GEMINI_MODEL` as server environment variables. Do not prefix the key with `VITE_`.
-4. Deploy, then verify `/api/brief` with real generation, keyboard use, a mobile viewport, export, and provider failure handling.
-5. Record the URL and deployment ID in `docs/SUBMISSION.md` and finish `docs/DEPLOYMENT.md`.
+4. Configure the required shared Redis quota store using `docs/RATE_LIMITS.md`. Defaults are 1 provider attempt/minute, 10/rolling day, and a conservative input budget. All deployments using this Gemini project must share the same store and namespace.
+5. Deploy, then verify `/api/brief` with real generation, keyboard use, a mobile viewport, export, and provider failure handling.
+6. Record the URL and deployment ID in `docs/SUBMISSION.md` and finish `docs/DEPLOYMENT.md`.
 
 ## Testing and audits
 
@@ -68,7 +69,7 @@ Reference: [Google Gemini structured output documentation](https://ai.google.dev
 
 ## Known limitations and future work
 
-- No server-side authentication or durable rate limit yet. Before unrestricted public use, set provider spending/quota limits and configure Vercel Firewall rate limiting or add a durable limiter. A tab-level submission guard is not an abuse control.
+- Shared atomic quota protection is implemented; production AI stays disabled until Redis is configured. See `docs/RATE_LIMITS.md`. There is no user authentication; configure Vercel Firewall controls before broad sharing to protect function/Redis traffic.
 - No durable note storage, collaboration, uploads, diarization, or calendar integrations.
 - Due dates retain the language of the notes; relative dates are not converted to calendar dates.
 - AI can omit, misattribute, or invent facts. Review before sharing.
@@ -78,4 +79,3 @@ Reference: [Google Gemini structured output documentation](https://ai.google.dev
 ## Submission materials
 
 See `docs/SUBMISSION.md`, `docs/DEPLOYMENT.md`, and `docs/REFLECTION.md`. Verification status and remaining work must be reported honestly.
-

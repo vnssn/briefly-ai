@@ -1,4 +1,5 @@
 import { validateBrief } from "../src/brief.js";
+import { getQuotaStore, limitsFromEnv, inputBudget } from "../server/quota.js";
 export const responseSchema = {
   type: "OBJECT",
   properties: {
@@ -27,6 +28,7 @@ export async function createBrief(
     key = process.env.GEMINI_API_KEY,
     model = process.env.GEMINI_MODEL || "gemini-3.8-flash",
     fetcher = fetch,
+    quotaStore,
   } = {},
 ) {
   if (
@@ -46,12 +48,31 @@ export async function createBrief(
           "AI is not configured yet. You can explore the sample brief while the server key is being set up.",
       },
     };
+  let store;
+  try {
+    store = quotaStore ?? getQuotaStore();
+    const decision = await store.reserve(inputBudget(notes), limitsFromEnv());
+    if (!decision.allowed)
+      return {
+        status: decision.status,
+        body: { error: decision.reason, retryAfter: decision.retryAfter },
+      };
+  } catch {
+    return {
+      status: 503,
+      body: {
+        error:
+          "AI is paused because shared quota protection is not available. The sample still works.",
+        retryAfter: 60,
+      },
+    };
+  }
   try {
     const response = await fetcher(
       `https://generativelanguage.googleapis.com/v1beta/models/${encodeURIComponent(model)}:generateContent`,
       {
         method: "POST",
-        signal: AbortSignal.timeout(25000),
+        signal: AbortSignal.timeout(22000),
         headers: { "Content-Type": "application/json", "x-goog-api-key": key },
         body: JSON.stringify({
           systemInstruction: {
@@ -76,16 +97,52 @@ export async function createBrief(
         }),
       },
     );
-    if (!response.ok)
+    if (!response.ok) {
+      let details;
+      try {
+        details = await response.json();
+      } catch {
+        /* Provider bodies may be empty. */
+      }
+      const daily = /per.?day|daily|\brpd\b/i.test(
+        JSON.stringify(details?.error?.details ?? []),
+      );
+      const rawHint = response.headers?.get?.("retry-after");
+      const hint =
+        Number(rawHint) > 0
+          ? Number(rawHint)
+          : (Date.parse(rawHint) - Date.now()) / 1000;
+      const retryInfo = details?.error?.details?.find?.((d) =>
+        d["@type"]?.endsWith("RetryInfo"),
+      );
+      const seconds = Number.parseFloat(retryInfo?.retryDelay);
+      const retryAfter = daily
+        ? 86400
+        : Math.min(
+            86400,
+            Math.max(
+              60,
+              Number.isFinite(hint) && hint > 0
+                ? hint
+                : Number.isFinite(seconds) && seconds > 0
+                  ? Math.ceil(seconds)
+                  : response.status === 429
+                    ? 3600
+                    : 60,
+            ),
+          );
+      await store.cooldown(retryAfter);
       return {
-        status: response.status === 429 ? 429 : 502,
+        status: response.status === 429 ? 429 : 503,
         body: {
           error:
             response.status === 429
-              ? "The AI service is busy or its quota is reached. Please wait a moment and retry."
-              : "The AI service could not complete this brief. Please retry shortly.",
+              ? "Gemini’s free-tier allowance is exhausted. Requests are paused to protect the quota; your notes are still here."
+              : "Gemini is temporarily unavailable. Requests are paused briefly; your notes are still here.",
+          retryAfter,
         },
       };
+    }
     const data = await response.json();
     const raw = data.candidates?.[0]?.content?.parts
       ?.filter((p) => !p.thought)
@@ -94,9 +151,15 @@ export async function createBrief(
     const brief = validateBrief(JSON.parse(raw));
     return { status: 200, body: { brief } };
   } catch (error) {
+    try {
+      await store.cooldown(60);
+    } catch {
+      /* Future reservations fail closed if storage is unavailable. */
+    }
     return {
       status: 502,
       body: {
+        retryAfter: 60,
         error:
           error.name === "TimeoutError" || error.name === "AbortError"
             ? "The AI took too long. Your notes are still here; please try again."
@@ -118,5 +181,7 @@ export default async function handler(req, res) {
     return res.status(400).json({ error: "Invalid request body." });
   }
   const result = await createBrief(body?.notes);
+  if (result.body.retryAfter)
+    res.setHeader("Retry-After", String(result.body.retryAfter));
   return res.status(result.status).json(result.body);
 }

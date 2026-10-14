@@ -1,4 +1,4 @@
-import React, { useState, useRef } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import {
   ArrowUpRight,
   ArrowRight,
@@ -25,7 +25,14 @@ import {
   validateBrief,
   toMarkdown,
 } from "./brief.js";
-export function NotesEditor({ notes, setNotes, onGenerate, busy, onSample }) {
+export function NotesEditor({
+  notes,
+  setNotes,
+  onGenerate,
+  busy,
+  onSample,
+  cooldownSeconds = 0,
+}) {
   return (
     <section className="editor card" aria-labelledby="notes-title">
       <div className="card-heading">
@@ -71,14 +78,18 @@ export function NotesEditor({ notes, setNotes, onGenerate, busy, onSample }) {
         <button
           className="generate"
           onClick={onGenerate}
-          disabled={busy || notes.trim().length < 40}
+          disabled={busy || cooldownSeconds > 0 || notes.trim().length < 40}
         >
           {busy ? (
             <LoaderCircle className="spin" size={18} />
           ) : (
             <Sparkles size={18} />
           )}{" "}
-          {busy ? "Finding the important things…" : "Create my brief"}
+          {busy
+            ? "Finding the important things…"
+            : cooldownSeconds > 0
+              ? `Try again in ${Math.ceil(cooldownSeconds / 60)} min`
+              : "Create my brief"}
           {!busy && <ArrowRight size={18} />}
         </button>
         <p className="privacy">
@@ -197,6 +208,19 @@ export function BriefResult({
   );
 }
 export default function App() {
+  const [cooldownSeconds, setCooldownSeconds] = useState(0);
+  useEffect(() => {
+    if (cooldownSeconds <= 0) return;
+    const deadline = Date.now() + cooldownSeconds * 1000;
+    const timer = setInterval(
+      () =>
+        setCooldownSeconds(
+          Math.max(0, Math.ceil((deadline - Date.now()) / 1000)),
+        ),
+      1000,
+    );
+    return () => clearInterval(timer);
+  }, [cooldownSeconds]);
   const [notes, setNotes] = useState(""),
     [brief, setBrief] = useState(null),
     [completed, setCompleted] = useState([]),
@@ -218,7 +242,7 @@ export default function App() {
     );
   };
   const generate = async () => {
-    if (requestRef.current) return;
+    if (requestRef.current || cooldownSeconds > 0) return;
     requestRef.current = true;
     setBusy(true);
     setError("");
@@ -231,6 +255,12 @@ export default function App() {
         signal: AbortSignal.timeout(30000),
       });
       const data = await response.json();
+      if (
+        !response.ok &&
+        Number.isFinite(data.retryAfter) &&
+        data.retryAfter > 0
+      )
+        setCooldownSeconds(Math.min(86400, Math.ceil(data.retryAfter)));
       if (!response.ok)
         throw new Error(
           data.error || "We couldn’t create your brief. Please try again.",
@@ -389,6 +419,7 @@ export default function App() {
               notes={notes}
               setNotes={setNotes}
               busy={busy}
+              cooldownSeconds={cooldownSeconds}
               onGenerate={generate}
               onSample={sample}
             />
