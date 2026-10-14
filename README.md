@@ -2,6 +2,8 @@
 
 Turn messy meeting notes into a summary, confirmed decisions, action items, and open questions. Built as a FlyRank frontend AI capstone with React, Vite, Gemini, and a Vercel server function.
 
+[Live app](https://briefly-ai-pink.vercel.app) · [Repository](https://github.com/vnssn/briefly-ai). Release status: frontend and sample deployed; production AI remains disabled until shared quota storage is configured and verified.
+
 ## Project brief
 
 Briefly helps students and small teams who leave meetings with scattered notes and unclear responsibilities. It extracts a structured brief from those notes, separates decisions from unresolved questions, and makes follow-through easier with task checkboxes and Markdown export. This idea keeps AI focused on a practical extraction problem with output that users can verify against their original notes.
@@ -79,4 +81,3 @@ Reference: [Google Gemini structured output documentation](https://ai.google.dev
 ## Submission materials
 
 See `docs/SUBMISSION.md`, `docs/DEPLOYMENT.md`, and `docs/REFLECTION.md`. Verification status and remaining work must be reported honestly.
-

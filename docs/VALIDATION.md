@@ -50,4 +50,9 @@ Live URL, GitHub push, Vercel deployment, production headers, real Gemini genera
 The suite now includes rolling shared budgets, concurrent local reservations, input-budget rejection, provider cooldowns, RetryInfo, Redis failure handling, production fail-closed behavior, and the browser retry countdown. Both browser tests and axe scans passed again after these changes. Shared Redis connectivity and execution of its Lua script remain pending configuration; see RATE_LIMITS.md. No additional live Gemini requests were used to test rate limiting. Lighthouse reports predate the quota UI change.
 
 ## Screenshot-based model selection
+
 The user supplied an AI Studio free-tier rate-limit screenshot showing Gemini 3.1 Flash Lite at 15 RPM, 250K input TPM, and 500 RPD. The app model and local server configuration were switched to gemini-3.1-flash-lite. One quota-protected smoke test returned 503 with a 60-second cooldown; live generation remains unverified. The app budgets remain 1 RPM, 10 rolling-day attempts, and 12,000 estimated input units/minute. See RATE_LIMITS.md.
+
+## Initial production deployment
+
+URL: https://briefly-ai-pink.vercel.app. GitHub: https://github.com/vnssn/briefly-ai. Deployment succeeded and the prepared sample was verified in the public HTTPS app. HTTP 200, Content-Security-Policy, nosniff, and DENY frame headers verified. Actual production mobile Lighthouse: performance **87**, accessibility **100**, best practices **100**, SEO **100**. Reports: lighthouse-production.report.html and .json. Gemini key is configured as a Vercel Production Secret for the next deployment; quota store activation and real production AI generation remain pending.
