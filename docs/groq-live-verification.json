@@ -1,0 +1,47 @@
+{
+  "description": "First successful live AI generation (Groq) through the full server chain: Arcjet per-visitor protection, shared Upstash Redis Lua quota reservation, strict structured output, runtime validation.",
+  "capturedAt": "2026-10-14T17:49:00Z",
+  "provider": {
+    "name": "GroqCloud",
+    "endpoint": "POST https://api.groq.com/openai/v1/chat/completions",
+    "model": "openai/gpt-oss-120b",
+    "structuredOutput": "response_format json_schema with strict: true (constrained decoding)"
+  },
+  "liveGeneration": {
+    "transport": "Local Vite dev server middleware running the production handler",
+    "httpStatus": 200,
+    "elapsedSeconds": 1.83,
+    "inputNotes": "Website launch sync sample notes (549-byte JSON payload)",
+    "brief": {
+      "title": "Website launch sync — October 14",
+      "summary": "The team set a target launch date of October 28 pending successful accessibility testing. Maya will deliver homepage copy, Alex will conduct the accessibility audit, and Sam will draft the launch email. The existing email platform will be used, and the analytics dashboard is excluded from this release. Support monitoring for launch day remains to be assigned.",
+      "decisions": [
+        "Launch the new website on October 28, contingent on passing accessibility testing.",
+        "Use the existing email platform instead of migrating before launch.",
+        "Analytics dashboard is out of scope for this release."
+      ],
+      "actions": [
+        { "task": "Finish the homepage copy", "owner": "Maya", "due": "October 18" },
+        { "task": "Run the accessibility audit and share findings", "owner": "Alex", "due": "October 21" },
+        { "task": "Prepare the launch email", "owner": "Sam", "due": "October 23" }
+      ],
+      "questions": ["Who will monitor support on launch day?"]
+    }
+  },
+  "providerOrgLimits": {
+    "source": "x-ratelimit-* response headers captured from a real chat completion probe",
+    "requestsPerDay": 1000,
+    "tokensPerMinute": 8000,
+    "capturedAt": "2026-10-14T17:52:01Z",
+    "appCeilings": {
+      "AI_REQUESTS_PER_MINUTE": 10,
+      "AI_REQUESTS_PER_DAY": 100,
+      "AI_INPUT_BUDGET_PER_MINUTE": 8000
+    }
+  },
+  "protectionLayers": {
+    "arcjet": "Shield LIVE, bot detection DRY_RUN (audit traffic never blocked), per-IP fixed window 3 requests/60s LIVE; fails open because the Redis limiter remains the hard global gate",
+    "sharedQuota": "Atomic Upstash Redis Lua reservation before every provider call; failed provider attempts consume allowance; provider failures trigger shared cooldowns"
+  },
+  "notes": "Credentials were read from the ignored .env.local file only; no secret values are recorded here."
+}
