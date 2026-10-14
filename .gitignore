@@ -9,3 +9,14 @@ playwright-report/
 .npm-cache/
 docs/upstash-approval.jpg
 docs/vercel-secret-configured.jpg
+
+*.log
+.vscode/
+.idea/
+*.swp
+*.swo
+.DS_Store
+Thumbs.db
+*.tmp
+*.temp
+.cache/
