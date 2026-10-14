@@ -168,10 +168,15 @@ export function createRedisStore({
 }
 const localStore = createMemoryStore();
 export function getQuotaStore(env = process.env) {
-  if (env.UPSTASH_REDIS_REST_URL && env.UPSTASH_REDIS_REST_TOKEN)
+  const credentials =
+    env.UPSTASH_REDIS_REST_URL && env.UPSTASH_REDIS_REST_TOKEN
+      ? { url: env.UPSTASH_REDIS_REST_URL, token: env.UPSTASH_REDIS_REST_TOKEN }
+      : env.KV_REST_API_URL && env.KV_REST_API_TOKEN
+        ? { url: env.KV_REST_API_URL, token: env.KV_REST_API_TOKEN }
+        : null;
+  if (credentials)
     return createRedisStore({
-      url: env.UPSTASH_REDIS_REST_URL,
-      token: env.UPSTASH_REDIS_REST_TOKEN,
+      ...credentials,
       namespace: env.AI_QUOTA_NAMESPACE || "briefly:quota:v1",
     });
   if (env.VERCEL || env.NODE_ENV === "production")
@@ -185,4 +190,3 @@ export function inputBudget(notes) {
     Buffer.byteLength(JSON.stringify({ meetingNotes: notes }), "utf8") + 4096
   );
 }
-

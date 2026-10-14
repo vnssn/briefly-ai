@@ -27,7 +27,7 @@ The user-provided AI Studio screenshot (14 October 2026) shows **Gemini 3.1 Flas
 ## Durable production storage (required)
 
 1. Create an Upstash Redis database through your Vercel integration or Upstash account.
-2. Add `UPSTASH_REDIS_REST_URL` and `UPSTASH_REDIS_REST_TOKEN` as server-only Vercel environment variables. Never use VITE_ prefixes or put credentials in source control.
+2. Connect the database to the Vercel project. The native integration creates `KV_REST_API_URL` and `KV_REST_API_TOKEN`, which the app accepts automatically. Manual setup can instead use `UPSTASH_REDIS_REST_URL` and `UPSTASH_REDIS_REST_TOKEN` as server-only Vercel environment variables. Never use VITE_ prefixes or put credentials in source control.
 3. All deployments/environments using the same Gemini project must use the **same Redis database and AI_QUOTA_NAMESPACE**. Use `briefly:quota:v1` unless you need a different project. Do not change namespace to bypass exhausted quota.
 4. Optionally set AI_REQUESTS_PER_MINUTE, AI_REQUESTS_PER_DAY, and AI_INPUT_BUDGET_PER_MINUTE to confirmed safe budgets. Invalid settings block generation. Configurable maxima are 10 RPM, 250 rolling-day attempts, and 100,000 estimated input units/minute; higher values fail closed.
 5. Redeploy and verify a first provider attempt, a second blocked attempt, and preservation of notes. Configure Vercel Firewall protection separately if exposing the endpoint widely to avoid abusive function/Redis traffic.
@@ -39,5 +39,3 @@ If Redis is missing, times out, fails, or returns an invalid decision, productio
 ## Verification boundaries
 
 Tests cover concurrent reservations in the local policy, boundary expiry, daily budgets, aggregate input, cooldown extension, configuration bounds, failed calls, provider RetryInfo, storage errors, and the Redis HTTP contract. The Redis Lua script still needs a real connected-database smoke test before release; mocked HTTP tests do not establish production Redis connectivity. No live provider probes were made to test the limiter, avoiding unnecessary free-tier usage.
-
-

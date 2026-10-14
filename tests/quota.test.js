@@ -157,22 +157,20 @@ describe("provider quota protection", () => {
   });
   it("honors RetryInfo and does not automatically retry", async () => {
     const cooldown = vi.fn();
-    const fetcher = vi
-      .fn()
-      .mockResolvedValue({
-        ok: false,
-        status: 429,
-        json: async () => ({
-          error: {
-            details: [
-              {
-                "@type": "type.googleapis.com/google.rpc.RetryInfo",
-                retryDelay: "125s",
-              },
-            ],
-          },
-        }),
-      });
+    const fetcher = vi.fn().mockResolvedValue({
+      ok: false,
+      status: 429,
+      json: async () => ({
+        error: {
+          details: [
+            {
+              "@type": "type.googleapis.com/google.rpc.RetryInfo",
+              retryDelay: "125s",
+            },
+          ],
+        },
+      }),
+    });
     const result = await createBrief(SAMPLE_NOTES, {
       key: "test",
       fetcher,
@@ -232,4 +230,25 @@ describe("provider quota protection", () => {
     });
     expect(fetcher).toHaveBeenCalledTimes(1);
   });
+});
+
+it("accepts the environment names created by the Vercel Upstash integration", async () => {
+  const fetcher = vi
+    .fn()
+    .mockResolvedValue({ ok: true, json: async () => ({ result: [1, 0] }) });
+  vi.stubGlobal("fetch", fetcher);
+  const store = getQuotaStore({
+    VERCEL: "1",
+    KV_REST_API_URL: "https://redis.example",
+    KV_REST_API_TOKEN: "test-integration-token",
+  });
+  expect((await store.reserve(100, limits)).allowed).toBe(true);
+  expect(fetcher).toHaveBeenCalledWith(
+    "https://redis.example",
+    expect.objectContaining({
+      headers: expect.objectContaining({
+        Authorization: "Bearer test-integration-token",
+      }),
+    }),
+  );
 });
