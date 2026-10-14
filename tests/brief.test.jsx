@@ -246,12 +246,10 @@ describe("quota countdown UI", () => {
   it("keeps the sample available but prevents more AI calls during cooldown", async () => {
     vi.stubGlobal(
       "fetch",
-      vi
-        .fn()
-        .mockResolvedValue({
-          ok: false,
-          json: async () => ({ error: "Please wait", retryAfter: 120 }),
-        }),
+      vi.fn().mockResolvedValue({
+        ok: false,
+        json: async () => ({ error: "Please wait", retryAfter: 120 }),
+      }),
     );
     render(<App />);
     fireEvent.click(screen.getByRole("button", { name: /Try a sample/ }));
@@ -268,3 +266,16 @@ describe("quota countdown UI", () => {
     expect(screen.getByText("SAMPLE BRIEF")).toBeInTheDocument();
   });
 });
+
+it.each([400, 401, 403, 404])(
+  "distinguishes provider configuration failure %i from transient overload",
+  async (status) => {
+    const result = await createBrief(SAMPLE_NOTES, {
+      key: "test",
+      fetcher: async () => ({ ok: false, status }),
+    });
+    expect(result.status).toBe(503);
+    expect(result.body.error).toContain("current server configuration");
+    expect(result.body.error).not.toContain("temporarily unavailable");
+  },
+);

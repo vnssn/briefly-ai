@@ -135,8 +135,9 @@ export async function createBrief(
       return {
         status: response.status === 429 ? 429 : 503,
         body: {
-          error:
-            response.status === 429
+          error: [400, 401, 403, 404].includes(response.status)
+            ? "The Gemini model or API key is not available with the current server configuration. Your notes are safe; the sample still works."
+            : response.status === 429
               ? "Gemini’s free-tier allowance is exhausted. Requests are paused to protect the quota; your notes are still here."
               : "Gemini is temporarily unavailable. Requests are paused briefly; your notes are still here.",
           retryAfter,
@@ -185,4 +186,3 @@ export default async function handler(req, res) {
     res.setHeader("Retry-After", String(result.body.retryAfter));
   return res.status(result.status).json(result.body);
 }
-

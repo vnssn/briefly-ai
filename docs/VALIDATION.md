@@ -4,8 +4,8 @@ Run date: 14 October 2026 (Asia/Kolkata). Local checks; production checks are st
 
 ## Automated tests
 
-- Vitest: **39 tests passed**.
-- Statement coverage: **90.19%**; branch coverage: **92.85%**; function coverage: **86.27%**.
+- Vitest: **43 tests passed**.
+- Statement coverage: **90.19%**; branch coverage: **92.92%**; function coverage: **86.27%**.
 - All three React components (`App`, `NotesEditor`, `BriefResult`) have behavior tests. Overall line coverage is **91%**.
 - Evidence: `coverage-summary.json`; full HTML report is generated in `coverage/` by `npm test`.
 - Browser tests: **2 passed**, covering the sample, checkbox progress, download, keyboard entry, mocked live generation, and preserving notes/results after a service failure.
@@ -64,3 +64,7 @@ Two simultaneous POST requests to the public production API produced one 429 wit
 A subsequent local diagnostic using the same Redis allowance confirmed Gemini itself returned HTTP 503, status UNAVAILABLE, with the message that the model is experiencing high demand. There was no automatic retry or model switching. A successful real Gemini result remains the release blocker.
 
 Clean-install verification: npm ci from the committed lockfile succeeded using the cache and Node 24.19. The full 39-test suite and production build passed again after reinstall. In production, activating the keyboard skip link and pressing Tab focused New brief as expected. Vercel Firewall review showed active system mitigations, zero custom rules, and inactive optional bot protection; no additional service was enabled.
+
+## New key and requested Gemini 2.5 Flash-Lite test
+The new key was tested with gemini-2.5-flash-lite through the same shared Redis limiter. Google returned HTTP 404 NOT_FOUND: this model is no longer available to new users, and the provider recommends gemini-3.5-flash-lite. The new key has not been promoted to Vercel. Evidence: flash-lite-key-verification.json. API error handling now distinguishes provider configuration/access errors (400/401/403/404) from transient overload; four added tests pass. No shared quota counters were reset.
+

@@ -1,0 +1,12 @@
+{
+  "timestamp": "2026-10-14T16:55:12.017Z",
+  "api": "v1/interactions",
+  "model": "gemini-3.1-flash-lite",
+  "result": {
+    "status": 503,
+    "body": {
+      "error": "Gemini is temporarily unavailable. Requests are paused briefly; your notes are still here.",
+      "retryAfter": 60
+    }
+  }
+}
