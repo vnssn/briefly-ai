@@ -4,9 +4,9 @@ Run date: 14 October 2026 (Asia/Kolkata). Local checks; production checks are st
 
 ## Automated tests
 
-- Vitest: **38 tests passed**.
-- Statement coverage: **89.65%**; branch coverage: **91.57%**; function coverage: **86.27%**.
-- All three React components (`App`, `NotesEditor`, `BriefResult`) have behavior tests. Overall line coverage is **90.42%**.
+- Vitest: **39 tests passed**.
+- Statement coverage: **90.19%**; branch coverage: **92.85%**; function coverage: **86.27%**.
+- All three React components (`App`, `NotesEditor`, `BriefResult`) have behavior tests. Overall line coverage is **91%**.
 - Evidence: `coverage-summary.json`; full HTML report is generated in `coverage/` by `npm test`.
 - Browser tests: **2 passed**, covering the sample, checkbox progress, download, keyboard entry, mocked live generation, and preserving notes/results after a service failure.
 - Browser API responses are mocked. These tests do not verify a real provider response.
@@ -56,3 +56,11 @@ The user supplied an AI Studio free-tier rate-limit screenshot showing Gemini 3.
 ## Initial production deployment
 
 URL: https://briefly-ai-pink.vercel.app. GitHub: https://github.com/vnssn/briefly-ai. Deployment succeeded and the prepared sample was verified in the public HTTPS app. HTTP 200, Content-Security-Policy, nosniff, and DENY frame headers verified. Actual production mobile Lighthouse: performance **87**, accessibility **100**, best practices **100**, SEO **100**. Reports: lighthouse-production.report.html and .json. Gemini key is configured as a Vercel Production Secret for the next deployment; quota store activation and real production AI generation remain pending.
+
+## Connected Redis release verification
+
+The user-created Free Upstash database upstash-kv-yellow-engine is connected to briefly-ai. The integration supplies KV_REST_API_URL and KV_REST_API_TOKEN, now supported by the app. Commit e38133b deployed successfully as 2DvWNnTTP2Xp7iyWnmFTn5rKkeBg.
+Two simultaneous POST requests to the public production API produced one 429 with Retry-After: 60 and one provider-unavailable response. The request that reached the provider had first completed the Redis Lua reservation. This verifies real Redis connectivity, Lua execution, and the concurrent shared limiter. Evidence: production-api-verification.json. The live UI displayed its countdown and preserved input and the previous sample output; production-cooldown.jpg records that state. Task completion and Markdown download were verified in the deployed app.
+A subsequent local diagnostic using the same Redis allowance confirmed Gemini itself returned HTTP 503, status UNAVAILABLE, with the message that the model is experiencing high demand. There was no automatic retry or model switching. A successful real Gemini result remains the release blocker.
+
+Clean-install verification: npm ci from the committed lockfile succeeded using the cache and Node 24.19. The full 39-test suite and production build passed again after reinstall. In production, activating the keyboard skip link and pressing Tab focused New brief as expected. Vercel Firewall review showed active system mitigations, zero custom rules, and inactive optional bot protection; no additional service was enabled.

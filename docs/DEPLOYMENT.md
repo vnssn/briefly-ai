@@ -2,7 +2,7 @@
 
 ## Local verification
 
-- [ ] Clean install succeeds with committed lockfile.
+- [x] Clean npm ci from the committed lockfile succeeds on Node 24.19; 39 tests and build pass after reinstall.
 - [x] Tests pass and coverage is recorded.
 - [x] Production build succeeds.
 - [x] Browser critical path passes with mocked provider; sample/export/task flow tested.
@@ -13,14 +13,14 @@
 
 - [x] GitHub repository created and source pushed without secrets: https://github.com/vnssn/briefly-ai
 - [x] Vercel project connected to vnssn/briefly-ai, main branch.
-- [ ] Server environment key configured, with provider quota/spending controls.
+- [x] Gemini Production Secret configured; shared application quotas active.
 - [x] Initial deployment succeeds: https://briefly-ai-pink.vercel.app
 - [ ] Real Gemini generation tested on deployed URL.
-- [ ] Sample, task toggling, export, and keyboard interactions tested in production.
-- [ ] Failure states checked without disclosing provider secrets.
-- [ ] Shared Redis configured; atomic quota reservation tested across deployments.
+- [x] Sample, task toggling, Markdown download, and keyboard skip-link navigation verified in production.
+- [x] Real provider 503 and shared quota 429 verified; UI preserves notes and previous output.
+- [x] Free shared Redis connected; two concurrent production requests verified atomic reservation and rejection.
 - [x] Screenshot confirms Flash Lite 15 RPM / 250K input TPM / 500 RPD; app uses 1 RPM / 12K estimated input / 10 rolling-day attempts.
-- [ ] Public endpoint Firewall controls reviewed/configured before broad sharing.
+- [x] Existing Vercel Firewall reviewed: system mitigations active; no custom WAF rules or bot protection enabled. Shared application limits protect Gemini; evaluate stronger edge controls before broad promotion.
 
 Unchecked items are not signed off.
 
@@ -35,4 +35,4 @@ In Vercel Deployments, select the previous verified production deployment and pr
 Release owner: Vansh Singh
 Sign-off date: pending production checks
 
-Gemini key has been saved as a Production Secret in Vercel; deployment must be refreshed after shared storage is configured. Upstash agreement/resource creation remains pending user action after automatic approval review blocked those actions. No paid service was created. Initial deployment ID: V1fM8RLebEBHNV83cT8PUDPDSJK5. Initial commit: 761c52f.
+Gemini Production Secret and the Free Upstash store are connected. Release e38133b is deployed (ID 2DvWNnTTP2Xp7iyWnmFTn5rKkeBg). Shared quota reservations, provider cooldown, task completion, and export were verified live. Real Gemini generation remains blocked by provider HTTP 503 UNAVAILABLE (high demand); do not sign off the release until it succeeds. No paid service was created.

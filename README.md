@@ -2,7 +2,7 @@
 
 Turn messy meeting notes into a summary, confirmed decisions, action items, and open questions. Built as a FlyRank frontend AI capstone with React, Vite, Gemini, and a Vercel server function.
 
-[Live app](https://briefly-ai-pink.vercel.app) · [Repository](https://github.com/vnssn/briefly-ai). Release status: frontend and sample deployed; production AI remains disabled until shared quota storage is configured and verified.
+[Live app](https://briefly-ai-pink.vercel.app) · [Repository](https://github.com/vnssn/briefly-ai). Release status: app, Gemini configuration, and shared Redis quota protection are deployed. Production quota enforcement, task tracking, and export are verified. Gemini is currently returning HTTP 503 high demand; successful live generation remains unverified.
 
 ## Project brief
 
@@ -71,7 +71,7 @@ Reference: [Google Gemini structured output documentation](https://ai.google.dev
 
 ## Known limitations and future work
 
-- Shared atomic quota protection is implemented; production AI stays disabled until Redis is configured. See `docs/RATE_LIMITS.md`. There is no user authentication; configure Vercel Firewall controls before broad sharing to protect function/Redis traffic.
+- Shared atomic quota protection is deployed and verified; a Redis outage blocks AI calls safely. See `docs/RATE_LIMITS.md`. There is no user authentication; configure Vercel Firewall controls before broad sharing to protect function/Redis traffic.
 - No durable note storage, collaboration, uploads, diarization, or calendar integrations.
 - Due dates retain the language of the notes; relative dates are not converted to calendar dates.
 - AI can omit, misattribute, or invent facts. Review before sharing.
