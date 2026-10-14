@@ -184,16 +184,21 @@ describe("server boundary", () => {
     const fetcher = vi.fn().mockResolvedValue({
       ok: true,
       json: async () => ({
-        candidates: [
-          { content: { parts: [{ text: JSON.stringify(SAMPLE_BRIEF) }] } },
-        ],
+        choices: [{ message: { content: JSON.stringify(SAMPLE_BRIEF) } }],
       }),
     });
     expect(
       (await createBrief(SAMPLE_NOTES, { key: "test", fetcher })).body.brief,
     ).toEqual(SAMPLE_BRIEF);
     const sent = JSON.parse(fetcher.mock.calls[0][1].body);
-    expect(sent.generationConfig.responseMimeType).toBe("application/json");
+    expect(sent.response_format.type).toBe("json_schema");
+    expect(sent.response_format.json_schema.strict).toBe(true);
+    expect(sent.response_format.json_schema.schema.required).toEqual(
+      expect.arrayContaining(["title", "summary", "decisions", "actions", "questions"]),
+    );
+    expect(JSON.parse(sent.messages.at(-1).content).meetingNotes).toBe(
+      SAMPLE_NOTES,
+    );
   });
   it.each([429, 403, 500])("maps provider error %i safely", async (status) => {
     const result = await createBrief(SAMPLE_NOTES, {
@@ -206,7 +211,7 @@ describe("server boundary", () => {
   it("handles invalid JSON, blocked output, and timeouts", async () => {
     for (const data of [
       {},
-      { candidates: [{ content: { parts: [{ text: "bad json" }] } }] },
+      { choices: [{ message: { content: "bad json" } }] },
     ])
       expect(
         (

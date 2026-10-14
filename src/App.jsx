@@ -93,7 +93,7 @@ export function NotesEditor({
           {!busy && <ArrowRight size={18} />}
         </button>
         <p className="privacy">
-          <ShieldCheck size={13} /> Notes are sent to Gemini only when you
+          <ShieldCheck size={13} /> Notes are sent to Groq only when you
           create a brief.
         </p>
       </div>

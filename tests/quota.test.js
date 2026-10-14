@@ -133,7 +133,7 @@ describe("shared Redis boundary", () => {
   });
 });
 describe("provider quota protection", () => {
-  it("does not call Gemini after a local budget rejection or storage outage", async () => {
+  it("does not call the provider after a local budget rejection or storage outage", async () => {
     const fetcher = vi.fn();
     for (const reserve of [
       async () => ({
@@ -155,19 +155,16 @@ describe("provider quota protection", () => {
     }
     expect(fetcher).not.toHaveBeenCalled();
   });
-  it("honors RetryInfo and does not automatically retry", async () => {
+  it("honors a Groq daily token limit and does not automatically retry", async () => {
     const cooldown = vi.fn();
     const fetcher = vi.fn().mockResolvedValue({
       ok: false,
       status: 429,
       json: async () => ({
         error: {
-          details: [
-            {
-              "@type": "type.googleapis.com/google.rpc.RetryInfo",
-              retryDelay: "125s",
-            },
-          ],
+          message:
+            "Rate limit reached for model `openai/gpt-oss-120b` on tokens per day (TPD): Limit 200000, Used 200000, Requested 1500. Please try again in 2m5.4s.",
+          type: "tokens",
         },
       }),
     });
@@ -176,8 +173,8 @@ describe("provider quota protection", () => {
       fetcher,
       quotaStore: { reserve: async () => ({ allowed: true }), cooldown },
     });
-    expect(result.body.retryAfter).toBe(125);
-    expect(cooldown).toHaveBeenCalledWith(125);
+    expect(result.body.retryAfter).toBe(86400);
+    expect(cooldown).toHaveBeenCalledWith(86400);
     expect(fetcher).toHaveBeenCalledTimes(1);
   });
   it("pauses for daily quota exhaustion and respects Retry-After", async () => {
@@ -188,7 +185,9 @@ describe("provider quota protection", () => {
           status: 429,
           json: async () => ({
             error: {
-              details: [{ quotaId: "GenerateRequestsPerDayPerProject" }],
+              message:
+                "Rate limit reached for model `openai/gpt-oss-120b` on requests per day (RPD): Limit 1000, Used 1000, Requested 1.",
+              type: "requests",
             },
           }),
         },
