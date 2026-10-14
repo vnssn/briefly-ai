@@ -26,7 +26,7 @@ export async function createBrief(
   notes,
   {
     key = process.env.GEMINI_API_KEY,
-    model = process.env.GEMINI_MODEL || "gemini-3.8-flash",
+    model = process.env.GEMINI_MODEL || "gemini-3.1-flash-lite",
     fetcher = fetch,
     quotaStore,
   } = {},
@@ -185,3 +185,4 @@ export default async function handler(req, res) {
     res.setHeader("Retry-After", String(result.body.retryAfter));
   return res.status(result.status).json(result.body);
 }
+

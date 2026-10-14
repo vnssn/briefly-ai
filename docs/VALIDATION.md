@@ -48,3 +48,6 @@ Live URL, GitHub push, Vercel deployment, production headers, real Gemini genera
 ## Free-tier quota verification
 
 The suite now includes rolling shared budgets, concurrent local reservations, input-budget rejection, provider cooldowns, RetryInfo, Redis failure handling, production fail-closed behavior, and the browser retry countdown. Both browser tests and axe scans passed again after these changes. Shared Redis connectivity and execution of its Lua script remain pending configuration; see RATE_LIMITS.md. No additional live Gemini requests were used to test rate limiting. Lighthouse reports predate the quota UI change.
+
+## Screenshot-based model selection
+The user supplied an AI Studio free-tier rate-limit screenshot showing Gemini 3.1 Flash Lite at 15 RPM, 250K input TPM, and 500 RPD. The app model and local server configuration were switched to gemini-3.1-flash-lite. One quota-protected smoke test returned 503 with a 60-second cooldown; live generation remains unverified. The app budgets remain 1 RPM, 10 rolling-day attempts, and 12,000 estimated input units/minute. See RATE_LIMITS.md.

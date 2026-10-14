@@ -40,7 +40,7 @@ The browser sends notes to the same-origin server endpoint. The server holds the
 
 ## AI integration
 
-Default model: `gemini-3.8-flash`; override with `GEMINI_MODEL` if needed for your account. Gemini receives a schema requiring a title, summary, decisions, actions with task/owner/due, and questions. The system instruction treats notes as data, prohibits invented commitments, and specifies `Unassigned` / `Not specified` for missing fields. Low temperature reduces variation. Structured generation is followed by length/type/shape validation because JSON syntax alone does not establish correctness. Users must review extracted facts; grounding is instructed, not guaranteed.
+Default model: `gemini-3.1-flash-lite`; override with `GEMINI_MODEL` if needed for your account. Gemini receives a schema requiring a title, summary, decisions, actions with task/owner/due, and questions. The system instruction treats notes as data, prohibits invented commitments, and specifies `Unassigned` / `Not specified` for missing fields. Low temperature reduces variation. Structured generation is followed by length/type/shape validation because JSON syntax alone does not establish correctness. Users must review extracted facts; grounding is instructed, not guaranteed.
 
 Reference: [Google Gemini structured output documentation](https://ai.google.dev/gemini-api/docs/structured-output).
 
@@ -79,3 +79,4 @@ Reference: [Google Gemini structured output documentation](https://ai.google.dev
 ## Submission materials
 
 See `docs/SUBMISSION.md`, `docs/DEPLOYMENT.md`, and `docs/REFLECTION.md`. Verification status and remaining work must be reported honestly.
+

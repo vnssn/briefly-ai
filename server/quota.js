@@ -8,8 +8,8 @@ export function limitsFromEnv(env = process.env) {
   };
   return {
     rpm: number("AI_REQUESTS_PER_MINUTE", 1, 10),
-    rpd: number("AI_REQUESTS_PER_DAY", 10, 1000),
-    tpm: number("AI_INPUT_BUDGET_PER_MINUTE", 12000, 1000000),
+    rpd: number("AI_REQUESTS_PER_DAY", 10, 250),
+    tpm: number("AI_INPUT_BUDGET_PER_MINUTE", 12000, 100000),
   };
 }
 export function reserveState(state, now, tokens, limits) {
@@ -185,3 +185,4 @@ export function inputBudget(notes) {
     Buffer.byteLength(JSON.stringify({ meetingNotes: notes }), "utf8") + 4096
   );
 }
+
