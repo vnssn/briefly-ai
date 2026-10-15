@@ -67,7 +67,34 @@ describe("rolling quota budgets", () => {
     expect(limitsFromEnv({})).toEqual(limits);
     expect(() => limitsFromEnv({ AI_REQUESTS_PER_MINUTE: "0" })).toThrow();
     expect(() => limitsFromEnv({ AI_REQUESTS_PER_DAY: "50000" })).toThrow();
-    expect(inputBudget("ह")).toBeGreaterThan(inputBudget("a"));
+    expect(inputBudget("🙂".repeat(100))).toBeGreaterThan(
+      inputBudget("a".repeat(100)),
+    );
+  });
+  it("accepts a full 15,000-character ordinary transcript within the 8K token budget", async () => {
+    const notes =
+      "Maya will finish the homepage copy by Friday. Alex will test the release. "
+        .repeat(250)
+        .slice(0, 15000);
+    expect(notes).toHaveLength(15000);
+    const store = createMemoryStore(() => 100000);
+    expect(
+      (await store.reserve(inputBudget(notes), { ...limits, tpm: 8000 }))
+        .allowed,
+    ).toBe(true);
+  });
+  it("still rejects token-dense input without spending a provider attempt", async () => {
+    const store = createMemoryStore(() => 100000);
+    const result = await store.reserve(inputBudget("🙂".repeat(7500)), {
+      ...limits,
+      tpm: 8000,
+    });
+    expect(result.status).toBe(400);
+    expect(result.reason).toContain("token allowance");
+    expect(
+      (await store.reserve(inputBudget(SAMPLE_NOTES), { ...limits, tpm: 8000 }))
+        .allowed,
+    ).toBe(true);
   });
   it("fails closed in production without shared storage", () => {
     expect(() => getQuotaStore({ VERCEL: "1" })).toThrow();

@@ -13,8 +13,8 @@ Sources checked 14 October 2026:
 
 - **10 requests per rolling 60 seconds**, shared across all visitors.
 - **100 provider attempts per rolling 24 hours**, shared across all visitors.
-- **8,000 estimated input units per rolling 60 seconds**. UTF-8 size of serialized notes plus 4,096 units of overhead is reserved before calling the model. This intentionally conservative estimate is an application budget, not Groq's exact tokenizer or an exact TPM measurement.
-- Existing 15,000-character input bound and 4,096 output-token cap remain.
+- **8,000 estimated input units per rolling 60 seconds**. The o200k tokenizer counts serialized notes, the system prompt, and the response schema. An additional 512-token framing margin and the full 2,048-token completion allowance are reserved. Provider token accounting remains authoritative.
+- Existing 15,000-character input bound and 2,048 output-token cap remain.
 - Reservations are atomic. A request never reaches Groq if allowance cannot be reserved.
 - Failed provider calls consume reservations; there is no refund or automatic retry.
 - Requests are spaced as well as counted, to avoid a burst around a time-window boundary.

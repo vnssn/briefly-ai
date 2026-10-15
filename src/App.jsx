@@ -60,7 +60,9 @@ export function NotesEditor({
           disabled={busy}
         />
         <div className="editor-meta">
-          <span id="notes-help">40 characters minimum</span>
+          <span id="notes-help">
+            40 characters minimum · AI token limits also apply
+          </span>
           <span>{notes.length.toLocaleString()} / 15,000</span>
         </div>
         <div className="sample-callout">
@@ -93,8 +95,8 @@ export function NotesEditor({
           {!busy && <ArrowRight size={18} />}
         </button>
         <p className="privacy">
-          <ShieldCheck size={13} /> Notes are sent to Groq only when you
-          create a brief.
+          <ShieldCheck size={13} /> Notes are sent to Groq only when you create
+          a brief.
         </p>
       </div>
     </section>

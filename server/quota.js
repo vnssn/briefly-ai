@@ -1,3 +1,7 @@
+import { Tiktoken } from "js-tiktoken/lite";
+import o200k from "js-tiktoken/ranks/o200k_base";
+const tokenizer = new Tiktoken(o200k);
+export const MAX_COMPLETION_TOKENS = 2048;
 // Shared rolling-window quota reservations. Failed provider calls are not refunded.
 export function limitsFromEnv(env = process.env) {
   const number = (name, fallback, max) => {
@@ -20,7 +24,7 @@ export function reserveState(state, now, tokens, limits) {
       status: 400,
       retryAfter: 0,
       reason:
-        "These notes exceed the app’s input budget. Shorten them and try again.",
+        "These notes fit the character limit but exceed the AI token allowance for one request. Shorten them or split the meeting into sections.",
     };
   if (state.cooldownUntil > now)
     return {
@@ -157,7 +161,7 @@ export function createRedisStore({
         retryAfter,
         reason:
           allowed === -1
-            ? "These notes exceed the app’s input budget. Shorten them and try again."
+            ? "These notes fit the character limit but exceed the AI token allowance for one request. Shorten them or split the meeting into sections."
             : "The app’s shared AI allowance is temporarily used up. Your notes are safe; try again after the wait.",
       };
     },
@@ -183,10 +187,16 @@ export function getQuotaStore(env = process.env) {
     throw new Error("Shared quota storage required");
   return localStore;
 }
-// A deliberately high byte-based estimate includes prompt/schema overhead. It is
-// an app budget, not Google's tokenizer; provider limits still take precedence.
-export function inputBudget(notes) {
-  return (
-    Buffer.byteLength(JSON.stringify({ meetingNotes: notes }), "utf8") + 4096
-  );
+// GPT-OSS uses o200k Harmony. Count base text tokens plus a safety margin for
+// provider chat/schema framing and reserve the entire possible completion.
+// Provider accounting remains authoritative; this is not a byte count.
+export function inputBudget(notes, prompt = "", schema = {}) {
+  const text =
+    JSON.stringify({ meetingNotes: notes }) + prompt + JSON.stringify(schema);
+  // Bounded chunks avoid quadratic BPE work on long unbroken strings. Splitting
+  // can overcount boundary tokens, which is safe for quota reservations.
+  let tokens = 0;
+  for (let offset = 0; offset < text.length; offset += 256)
+    tokens += tokenizer.encode(text.slice(offset, offset + 256)).length;
+  return tokens + 512 + MAX_COMPLETION_TOKENS;
 }
